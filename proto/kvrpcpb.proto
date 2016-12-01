@@ -20,6 +20,7 @@ enum MessageType {
     CmdScanLock         = 9; // Scan all orphan locks in a Region.
     CmdResolveLock      = 10; // Resolve all orphan locks belong to a transaction.
     CmdGC               = 11;
+    CmdImportData       = 12;
 
     // These 3 raw APIs are for raw kv operations which do not contain
     // transactions or MVCC. They should not be mixed with other commands in the
@@ -98,6 +99,15 @@ message CmdPrewriteRequest {
 }
 
 message CmdPrewriteResponse {
+    repeated KeyError errors = 1;
+}
+
+message CmdImportDataRequest {
+    repeated Mutation mutations   = 1;
+    optional uint64 version       = 2 [(gogoproto.nullable) = false];
+}
+
+message CmdImportDataResponse {
     repeated KeyError errors = 1;
 }
 
@@ -206,6 +216,7 @@ message Request {
     optional CmdScanLockRequest        cmd_scan_lock_req      = 12;
     optional CmdResolveLockRequest     cmd_resolve_lock_req   = 13;
     optional CmdGCRequest              cmd_gc_req             = 14;
+    optional CmdImportDataRequest      cmd_import_data_req    = 15;
 
     optional CmdRawGetRequest          cmd_raw_get_req        = 256;
     optional CmdRawPutRequest          cmd_raw_put_req        = 257;
@@ -225,7 +236,8 @@ message Response {
     optional CmdScanLockResponse        cmd_scan_lock_resp      = 12;
     optional CmdResolveLockResponse     cmd_resolve_lock_resp   = 13;
     optional CmdGCResponse              cmd_gc_resp             = 14;
-    
+    optional CmdImportDataResponse      cmd_import_data_resp    = 15;
+
     optional CmdRawGetResponse          cmd_raw_get_resp        = 256;
     optional CmdRawPutResponse          cmd_raw_put_resp        = 257;
     optional CmdRawDeleteResponse       cmd_raw_delete_resp     = 258;      
