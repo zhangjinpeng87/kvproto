@@ -315,6 +315,8 @@ message StoreStats {
     uint64 bytes_written = 11;
     // Keys written for the store.
     uint64 keys_written = 12;
+    // Stall micros for the store.
+    uint64 stall_micros = 13;
 }
 
 message StoreHeartbeatRequest {
