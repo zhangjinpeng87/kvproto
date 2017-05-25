@@ -30,6 +30,11 @@ enum MessageType {
     CmdRawDelete        = 258;
 }
 
+enum CommandPri {
+    Normal = 0,
+    High   = 1,
+}
+
 message LockInfo {
     optional bytes  primary_lock = 1;
     optional uint64 lock_version = 2 [(gogoproto.nullable) = false];
@@ -49,6 +54,7 @@ message Context {
     optional metapb.Peer        peer         = 3;
     optional bool               read_quorum  = 4 [(gogoproto.nullable) = false];
     optional uint64             term         = 5 [(gogoproto.nullable) = false];
+    optional CommandPri         priority     = 6;
 }
 
 message CmdGetRequest {
