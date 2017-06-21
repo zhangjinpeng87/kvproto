@@ -139,13 +139,6 @@ func (m *RequestHeader) String() string            { return proto.CompactTextStr
 func (*RequestHeader) ProtoMessage()               {}
 func (*RequestHeader) Descriptor() ([]byte, []int) { return fileDescriptorPdpb, []int{0} }
 
-func (m *RequestHeader) GetClusterId() uint64 {
-	if m != nil {
-		return m.ClusterId
-	}
-	return 0
-}
-
 type ResponseHeader struct {
 	// cluster_id is the ID of the cluster which sent the response.
 	ClusterId uint64 `protobuf:"varint,1,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
@@ -156,13 +149,6 @@ func (m *ResponseHeader) Reset()                    { *m = ResponseHeader{} }
 func (m *ResponseHeader) String() string            { return proto.CompactTextString(m) }
 func (*ResponseHeader) ProtoMessage()               {}
 func (*ResponseHeader) Descriptor() ([]byte, []int) { return fileDescriptorPdpb, []int{1} }
-
-func (m *ResponseHeader) GetClusterId() uint64 {
-	if m != nil {
-		return m.ClusterId
-	}
-	return 0
-}
 
 func (m *ResponseHeader) GetError() *Error {
 	if m != nil {
@@ -181,20 +167,6 @@ func (m *Error) String() string            { return proto.CompactTextString(m) }
 func (*Error) ProtoMessage()               {}
 func (*Error) Descriptor() ([]byte, []int) { return fileDescriptorPdpb, []int{2} }
 
-func (m *Error) GetType() ErrorType {
-	if m != nil {
-		return m.Type
-	}
-	return ErrorType_OK
-}
-
-func (m *Error) GetMessage() string {
-	if m != nil {
-		return m.Message
-	}
-	return ""
-}
-
 type TsoRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Count  uint32         `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
@@ -212,13 +184,6 @@ func (m *TsoRequest) GetHeader() *RequestHeader {
 	return nil
 }
 
-func (m *TsoRequest) GetCount() uint32 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
-}
-
 type Timestamp struct {
 	Physical int64 `protobuf:"varint,1,opt,name=physical,proto3" json:"physical,omitempty"`
 	Logical  int64 `protobuf:"varint,2,opt,name=logical,proto3" json:"logical,omitempty"`
@@ -228,20 +193,6 @@ func (m *Timestamp) Reset()                    { *m = Timestamp{} }
 func (m *Timestamp) String() string            { return proto.CompactTextString(m) }
 func (*Timestamp) ProtoMessage()               {}
 func (*Timestamp) Descriptor() ([]byte, []int) { return fileDescriptorPdpb, []int{4} }
-
-func (m *Timestamp) GetPhysical() int64 {
-	if m != nil {
-		return m.Physical
-	}
-	return 0
-}
-
-func (m *Timestamp) GetLogical() int64 {
-	if m != nil {
-		return m.Logical
-	}
-	return 0
-}
 
 type TsoResponse struct {
 	Header    *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
@@ -259,13 +210,6 @@ func (m *TsoResponse) GetHeader() *ResponseHeader {
 		return m.Header
 	}
 	return nil
-}
-
-func (m *TsoResponse) GetCount() uint32 {
-	if m != nil {
-		return m.Count
-	}
-	return 0
 }
 
 func (m *TsoResponse) GetTimestamp() *Timestamp {
@@ -356,13 +300,6 @@ func (m *IsBootstrappedResponse) GetHeader() *ResponseHeader {
 	return nil
 }
 
-func (m *IsBootstrappedResponse) GetBootstrapped() bool {
-	if m != nil {
-		return m.Bootstrapped
-	}
-	return false
-}
-
 type AllocIDRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 }
@@ -396,13 +333,6 @@ func (m *AllocIDResponse) GetHeader() *ResponseHeader {
 	return nil
 }
 
-func (m *AllocIDResponse) GetId() uint64 {
-	if m != nil {
-		return m.Id
-	}
-	return 0
-}
-
 type GetStoreRequest struct {
 	Header  *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	StoreId uint64         `protobuf:"varint,2,opt,name=store_id,json=storeId,proto3" json:"store_id,omitempty"`
@@ -418,13 +348,6 @@ func (m *GetStoreRequest) GetHeader() *RequestHeader {
 		return m.Header
 	}
 	return nil
-}
-
-func (m *GetStoreRequest) GetStoreId() uint64 {
-	if m != nil {
-		return m.StoreId
-	}
-	return 0
 }
 
 type GetStoreResponse struct {
@@ -508,13 +431,6 @@ func (m *GetRegionRequest) GetHeader() *RequestHeader {
 	return nil
 }
 
-func (m *GetRegionRequest) GetRegionKey() []byte {
-	if m != nil {
-		return m.RegionKey
-	}
-	return nil
-}
-
 type GetRegionResponse struct {
 	Header *ResponseHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Region *metapb.Region  `protobuf:"bytes,2,opt,name=region" json:"region,omitempty"`
@@ -562,13 +478,6 @@ func (m *GetRegionByIDRequest) GetHeader() *RequestHeader {
 		return m.Header
 	}
 	return nil
-}
-
-func (m *GetRegionByIDRequest) GetRegionId() uint64 {
-	if m != nil {
-		return m.RegionId
-	}
-	return 0
 }
 
 type GetClusterConfigRequest struct {
@@ -665,34 +574,6 @@ func (m *Member) String() string            { return proto.CompactTextString(m) 
 func (*Member) ProtoMessage()               {}
 func (*Member) Descriptor() ([]byte, []int) { return fileDescriptorPdpb, []int{23} }
 
-func (m *Member) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
-func (m *Member) GetMemberId() uint64 {
-	if m != nil {
-		return m.MemberId
-	}
-	return 0
-}
-
-func (m *Member) GetPeerUrls() []string {
-	if m != nil {
-		return m.PeerUrls
-	}
-	return nil
-}
-
-func (m *Member) GetClientUrls() []string {
-	if m != nil {
-		return m.ClientUrls
-	}
-	return nil
-}
-
 type GetMembersRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 }
@@ -758,13 +639,6 @@ func (m *PeerStats) GetPeer() *metapb.Peer {
 	return nil
 }
 
-func (m *PeerStats) GetDownSeconds() uint64 {
-	if m != nil {
-		return m.DownSeconds
-	}
-	return 0
-}
-
 type RegionHeartbeatRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Region *metapb.Region `protobuf:"bytes,2,opt,name=region" json:"region,omitempty"`
@@ -823,34 +697,6 @@ func (m *RegionHeartbeatRequest) GetPendingPeers() []*metapb.Peer {
 	return nil
 }
 
-func (m *RegionHeartbeatRequest) GetBytesWritten() uint64 {
-	if m != nil {
-		return m.BytesWritten
-	}
-	return 0
-}
-
-func (m *RegionHeartbeatRequest) GetBytesRead() uint64 {
-	if m != nil {
-		return m.BytesRead
-	}
-	return 0
-}
-
-func (m *RegionHeartbeatRequest) GetKeysWritten() uint64 {
-	if m != nil {
-		return m.KeysWritten
-	}
-	return 0
-}
-
-func (m *RegionHeartbeatRequest) GetKeysRead() uint64 {
-	if m != nil {
-		return m.KeysRead
-	}
-	return 0
-}
-
 type ChangePeer struct {
 	Peer *metapb.Peer `protobuf:"bytes,1,opt,name=peer" json:"peer,omitempty"`
 	// FIXME: replace with actual ConfChangeType once eraftpb uses proto3.
@@ -867,13 +713,6 @@ func (m *ChangePeer) GetPeer() *metapb.Peer {
 		return m.Peer
 	}
 	return nil
-}
-
-func (m *ChangePeer) GetChangeType() ConfChangeType {
-	if m != nil {
-		return m.ChangeType
-	}
-	return ConfChangeType_AddNode
 }
 
 type TransferLeader struct {
@@ -985,20 +824,6 @@ func (m *AskSplitResponse) GetHeader() *ResponseHeader {
 	return nil
 }
 
-func (m *AskSplitResponse) GetNewRegionId() uint64 {
-	if m != nil {
-		return m.NewRegionId
-	}
-	return 0
-}
-
-func (m *AskSplitResponse) GetNewPeerIds() []uint64 {
-	if m != nil {
-		return m.NewPeerIds
-	}
-	return nil
-}
-
 type ReportSplitRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`
 	Left   *metapb.Region `protobuf:"bytes,2,opt,name=left" json:"left,omitempty"`
@@ -1077,90 +902,6 @@ func (m *StoreStats) Reset()                    { *m = StoreStats{} }
 func (m *StoreStats) String() string            { return proto.CompactTextString(m) }
 func (*StoreStats) ProtoMessage()               {}
 func (*StoreStats) Descriptor() ([]byte, []int) { return fileDescriptorPdpb, []int{35} }
-
-func (m *StoreStats) GetStoreId() uint64 {
-	if m != nil {
-		return m.StoreId
-	}
-	return 0
-}
-
-func (m *StoreStats) GetCapacity() uint64 {
-	if m != nil {
-		return m.Capacity
-	}
-	return 0
-}
-
-func (m *StoreStats) GetAvailable() uint64 {
-	if m != nil {
-		return m.Available
-	}
-	return 0
-}
-
-func (m *StoreStats) GetRegionCount() uint32 {
-	if m != nil {
-		return m.RegionCount
-	}
-	return 0
-}
-
-func (m *StoreStats) GetSendingSnapCount() uint32 {
-	if m != nil {
-		return m.SendingSnapCount
-	}
-	return 0
-}
-
-func (m *StoreStats) GetReceivingSnapCount() uint32 {
-	if m != nil {
-		return m.ReceivingSnapCount
-	}
-	return 0
-}
-
-func (m *StoreStats) GetStartTime() uint32 {
-	if m != nil {
-		return m.StartTime
-	}
-	return 0
-}
-
-func (m *StoreStats) GetApplyingSnapCount() uint32 {
-	if m != nil {
-		return m.ApplyingSnapCount
-	}
-	return 0
-}
-
-func (m *StoreStats) GetIsBusy() bool {
-	if m != nil {
-		return m.IsBusy
-	}
-	return false
-}
-
-func (m *StoreStats) GetUsedSize() uint64 {
-	if m != nil {
-		return m.UsedSize
-	}
-	return 0
-}
-
-func (m *StoreStats) GetBytesWritten() uint64 {
-	if m != nil {
-		return m.BytesWritten
-	}
-	return 0
-}
-
-func (m *StoreStats) GetKeysWritten() uint64 {
-	if m != nil {
-		return m.KeysWritten
-	}
-	return 0
-}
 
 type StoreHeartbeatRequest struct {
 	Header *RequestHeader `protobuf:"bytes,1,opt,name=header" json:"header,omitempty"`

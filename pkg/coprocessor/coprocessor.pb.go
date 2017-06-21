@@ -51,20 +51,6 @@ func (m *KeyRange) String() string            { return proto.CompactTextString(m
 func (*KeyRange) ProtoMessage()               {}
 func (*KeyRange) Descriptor() ([]byte, []int) { return fileDescriptorCoprocessor, []int{0} }
 
-func (m *KeyRange) GetStart() []byte {
-	if m != nil {
-		return m.Start
-	}
-	return nil
-}
-
-func (m *KeyRange) GetEnd() []byte {
-	if m != nil {
-		return m.End
-	}
-	return nil
-}
-
 type Request struct {
 	Context *kvrpcpb.Context `protobuf:"bytes,1,opt,name=context" json:"context,omitempty"`
 	Tp      int64            `protobuf:"varint,2,opt,name=tp,proto3" json:"tp,omitempty"`
@@ -80,20 +66,6 @@ func (*Request) Descriptor() ([]byte, []int) { return fileDescriptorCoprocessor,
 func (m *Request) GetContext() *kvrpcpb.Context {
 	if m != nil {
 		return m.Context
-	}
-	return nil
-}
-
-func (m *Request) GetTp() int64 {
-	if m != nil {
-		return m.Tp
-	}
-	return 0
-}
-
-func (m *Request) GetData() []byte {
-	if m != nil {
-		return m.Data
 	}
 	return nil
 }
@@ -129,13 +101,6 @@ func (m *Response) GetLocked() *kvrpcpb.LockInfo {
 		return m.Locked
 	}
 	return nil
-}
-
-func (m *Response) GetOtherError() string {
-	if m != nil {
-		return m.OtherError
-	}
-	return ""
 }
 
 func init() {
