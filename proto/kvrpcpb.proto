@@ -119,8 +119,9 @@ message CommitResponse {
 }
 
 message ImportRequest {
-    repeated Mutation mutations = 1;
-    uint64 commit_version = 2;
+    Context context = 1;
+    repeated Mutation mutations = 2;
+    uint64 commit_version = 3;
 }
 
 message ImportResponse {
