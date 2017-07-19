@@ -95,6 +95,13 @@ const METHOD_TIKV_KV_GC: ::grpc::Method<super::kvrpcpb::GCRequest, super::kvrpcp
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
+const METHOD_TIKV_KV_DELETE_RANGE: ::grpc::Method<super::kvrpcpb::DeleteRangeRequest, super::kvrpcpb::DeleteRangeResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvDeleteRange",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
 const METHOD_TIKV_RAW_GET: ::grpc::Method<super::kvrpcpb::RawGetRequest, super::kvrpcpb::RawGetResponse> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/RawGet",
@@ -116,6 +123,13 @@ const METHOD_TIKV_RAW_DELETE: ::grpc::Method<super::kvrpcpb::RawDeleteRequest, s
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
 
+const METHOD_TIKV_RAW_SCAN: ::grpc::Method<super::kvrpcpb::RawScanRequest, super::kvrpcpb::RawScanResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/RawScan",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
 const METHOD_TIKV_COPROCESSOR: ::grpc::Method<super::coprocessor::Request, super::coprocessor::Response> = ::grpc::Method {
     ty: ::grpc::MethodType::Unary,
     name: "/tikvpb.Tikv/Coprocessor",
@@ -133,6 +147,20 @@ const METHOD_TIKV_RAFT: ::grpc::Method<super::raft_serverpb::RaftMessage, super:
 const METHOD_TIKV_SNAPSHOT: ::grpc::Method<super::raft_serverpb::SnapshotChunk, super::raft_serverpb::Done> = ::grpc::Method {
     ty: ::grpc::MethodType::ClientStreaming,
     name: "/tikvpb.Tikv/Snapshot",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
+const METHOD_TIKV_MVCC_GET_BY_KEY: ::grpc::Method<super::kvrpcpb::MvccGetByKeyRequest, super::kvrpcpb::MvccGetByKeyResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/MvccGetByKey",
+    req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+    resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
+};
+
+const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpc::Method<super::kvrpcpb::MvccGetByStartTsRequest, super::kvrpcpb::MvccGetByStartTsResponse> = ::grpc::Method {
+    ty: ::grpc::MethodType::Unary,
+    name: "/tikvpb.Tikv/MvccGetByStartTs",
     req_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
     resp_mar: ::grpc::Marshaller { ser: ::grpc::pb_ser, de: ::grpc::pb_de },
 };
@@ -324,6 +352,22 @@ impl TikvClient {
         self.kv_gc_async_opt(req, ::grpc::CallOption::default())
     }
 
+    pub fn kv_delete_range_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::DeleteRangeResponse> {
+        self.client.unary_call(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
+    }
+
+    pub fn kv_delete_range(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpc::Result<super::kvrpcpb::DeleteRangeResponse> {
+        self.kv_delete_range_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn kv_delete_range_async_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
+    }
+
+    pub fn kv_delete_range_async(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
+        self.kv_delete_range_async_opt(req, ::grpc::CallOption::default())
+    }
+
     pub fn raw_get_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawGetResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_GET, req, opt)
     }
@@ -372,6 +416,22 @@ impl TikvClient {
         self.raw_delete_async_opt(req, ::grpc::CallOption::default())
     }
 
+    pub fn raw_scan_opt(&self, req: super::kvrpcpb::RawScanRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::RawScanResponse> {
+        self.client.unary_call(&METHOD_TIKV_RAW_SCAN, req, opt)
+    }
+
+    pub fn raw_scan(&self, req: super::kvrpcpb::RawScanRequest) -> ::grpc::Result<super::kvrpcpb::RawScanResponse> {
+        self.raw_scan_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn raw_scan_async_opt(&self, req: super::kvrpcpb::RawScanRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawScanResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_RAW_SCAN, req, opt)
+    }
+
+    pub fn raw_scan_async(&self, req: super::kvrpcpb::RawScanRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::RawScanResponse> {
+        self.raw_scan_async_opt(req, ::grpc::CallOption::default())
+    }
+
     pub fn coprocessor_opt(&self, req: super::coprocessor::Request, opt: ::grpc::CallOption) -> ::grpc::Result<super::coprocessor::Response> {
         self.client.unary_call(&METHOD_TIKV_COPROCESSOR, req, opt)
     }
@@ -403,6 +463,38 @@ impl TikvClient {
     pub fn snapshot(&self) -> (::grpc::ClientCStreamSender<super::raft_serverpb::SnapshotChunk>, ::grpc::ClientCStreamReceiver<super::raft_serverpb::Done>) {
         self.snapshot_opt(::grpc::CallOption::default())
     }
+
+    pub fn mvcc_get_by_key_opt(&self, req: super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.client.unary_call(&METHOD_TIKV_MVCC_GET_BY_KEY, req, opt)
+    }
+
+    pub fn mvcc_get_by_key(&self, req: super::kvrpcpb::MvccGetByKeyRequest) -> ::grpc::Result<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.mvcc_get_by_key_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn mvcc_get_by_key_async_opt(&self, req: super::kvrpcpb::MvccGetByKeyRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_MVCC_GET_BY_KEY, req, opt)
+    }
+
+    pub fn mvcc_get_by_key_async(&self, req: super::kvrpcpb::MvccGetByKeyRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByKeyResponse> {
+        self.mvcc_get_by_key_async_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn mvcc_get_by_start_ts_opt(&self, req: super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpc::CallOption) -> ::grpc::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.client.unary_call(&METHOD_TIKV_MVCC_GET_BY_START_TS, req, opt)
+    }
+
+    pub fn mvcc_get_by_start_ts(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpc::Result<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.mvcc_get_by_start_ts_opt(req, ::grpc::CallOption::default())
+    }
+
+    pub fn mvcc_get_by_start_ts_async_opt(&self, req: super::kvrpcpb::MvccGetByStartTsRequest, opt: ::grpc::CallOption) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_MVCC_GET_BY_START_TS, req, opt)
+    }
+
+    pub fn mvcc_get_by_start_ts_async(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpc::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
+        self.mvcc_get_by_start_ts_async_opt(req, ::grpc::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -420,12 +512,16 @@ pub trait Tikv {
     fn kv_scan_lock(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpc::UnarySink<super::kvrpcpb::ScanLockResponse>);
     fn kv_resolve_lock(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpc::UnarySink<super::kvrpcpb::ResolveLockResponse>);
     fn kv_gc(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpc::UnarySink<super::kvrpcpb::GCResponse>);
+    fn kv_delete_range(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpc::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
     fn raw_get(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawGetResponse>);
     fn raw_put(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawPutResponse>);
     fn raw_delete(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawDeleteResponse>);
+    fn raw_scan(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::RawScanRequest, sink: ::grpc::UnarySink<super::kvrpcpb::RawScanResponse>);
     fn coprocessor(&self, ctx: ::grpc::RpcContext, req: super::coprocessor::Request, sink: ::grpc::UnarySink<super::coprocessor::Response>);
     fn raft(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::RaftMessage>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
     fn snapshot(&self, ctx: ::grpc::RpcContext, stream: ::grpc::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpc::ClientStreamingSink<super::raft_serverpb::Done>);
+    fn mvcc_get_by_key(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpc::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
+    fn mvcc_get_by_start_ts(&self, ctx: ::grpc::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpc::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
@@ -475,6 +571,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
         instance.kv_gc(ctx, req, resp)
     });
     let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KV_DELETE_RANGE, move |ctx, req, resp| {
+        instance.kv_delete_range(ctx, req, resp)
+    });
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_GET, move |ctx, req, resp| {
         instance.raw_get(ctx, req, resp)
     });
@@ -487,6 +587,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
         instance.raw_delete(ctx, req, resp)
     });
     let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_RAW_SCAN, move |ctx, req, resp| {
+        instance.raw_scan(ctx, req, resp)
+    });
+    let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_COPROCESSOR, move |ctx, req, resp| {
         instance.coprocessor(ctx, req, resp)
     });
@@ -497,6 +601,14 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpc::Service {
     let instance = s.clone();
     builder = builder.add_client_streaming_handler(&METHOD_TIKV_SNAPSHOT, move |ctx, req, resp| {
         instance.snapshot(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_KEY, move |ctx, req, resp| {
+        instance.mvcc_get_by_key(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_START_TS, move |ctx, req, resp| {
+        instance.mvcc_get_by_start_ts(ctx, req, resp)
     });
     builder.build()
 }
