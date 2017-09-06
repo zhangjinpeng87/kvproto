@@ -23,6 +23,12 @@ enum StoreState {
     Tombstone = 2;
 }
 
+enum SuffrageState {
+    Nonvoter = 0;
+    Staging  = 1;
+    Voter    = 2;
+}
+
 // Case insensitive key/value for replica constraints.
 message StoreLabel {
     optional string key         = 1 [(gogoproto.nullable) = false];
@@ -53,7 +59,8 @@ message Region {
     repeated Peer   peers               = 5;
 }
 
-message Peer {      
-    optional uint64 id          = 1 [(gogoproto.nullable) = false]; 
-    optional uint64 store_id    = 2 [(gogoproto.nullable) = false];
+message Peer {
+    optional uint64 id              = 1 [(gogoproto.nullable) = false];
+    optional uint64 store_id        = 2 [(gogoproto.nullable) = false];
+    optional SuffrageState suffrage = 3;
 }

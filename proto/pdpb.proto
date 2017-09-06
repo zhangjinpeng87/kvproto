@@ -231,8 +231,11 @@ message RegionHeartbeatRequest {
 // used directly in proto3 syntax.
 // See more: https://developers.google.com/protocol-buffers/docs/proto3#using-proto2-message-types
 enum ConfChangeType {
-    AddNode    = 0;
-    RemoveNode = 1;
+    AddNode     = 0;
+    RemoveNode  = 1;
+    AddVoter    = 2;
+    AddNonvoter = 3;
+    DemoteVoter = 4;
 }
 
 message ChangePeer {

@@ -6,6 +6,9 @@ impl From<pdpb::ConfChangeType> for eraftpb::ConfChangeType {
         match ct {
             pdpb::ConfChangeType::AddNode => eraftpb::ConfChangeType::AddNode,
             pdpb::ConfChangeType::RemoveNode => eraftpb::ConfChangeType::RemoveNode,
+            pdpb::ConfChangeType::AddVoter => eraftpb::ConfChangeType::AddVoter,
+            pdpb::ConfChangeType::AddNonvoter => eraftpb::ConfChangeType::AddNonvoter,
+            pdpb::ConfChangeType::DemoteVoter => eraftpb::ConfChangeType::DemoteVoter,
         }
     }
 }
@@ -15,6 +18,9 @@ impl From<eraftpb::ConfChangeType> for pdpb::ConfChangeType {
         match ct {
             eraftpb::ConfChangeType::AddNode => pdpb::ConfChangeType::AddNode,
             eraftpb::ConfChangeType::RemoveNode => pdpb::ConfChangeType::RemoveNode,
+            eraftpb::ConfChangeType::AddVoter => pdpb::ConfChangeType::AddVoter,
+            eraftpb::ConfChangeType::AddNonvoter => pdpb::ConfChangeType::AddNonvoter,
+            eraftpb::ConfChangeType::DemoteVoter => pdpb::ConfChangeType::DemoteVoter,
         }
     }
 }

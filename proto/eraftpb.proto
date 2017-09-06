@@ -74,8 +74,11 @@ message ConfState {
 }
 
 enum ConfChangeType {
-    AddNode    = 0;
-    RemoveNode = 1;
+    AddNode     = 0;
+    RemoveNode  = 1;
+    AddVoter    = 2;
+    AddNonvoter = 3;
+    DemoteVoter = 4;
 }
 
 message ConfChange {
