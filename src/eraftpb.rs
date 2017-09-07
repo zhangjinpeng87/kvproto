@@ -1886,6 +1886,7 @@ impl ::protobuf::reflect::ProtobufValue for HardState {
 pub struct ConfState {
     // message fields
     nodes: ::std::vec::Vec<u64>,
+    servers: ::protobuf::RepeatedField<Server>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1941,10 +1942,48 @@ impl ConfState {
     fn mut_nodes_for_reflect(&mut self) -> &mut ::std::vec::Vec<u64> {
         &mut self.nodes
     }
+
+    // repeated .eraftpb.Server servers = 2;
+
+    pub fn clear_servers(&mut self) {
+        self.servers.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_servers(&mut self, v: ::protobuf::RepeatedField<Server>) {
+        self.servers = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_servers(&mut self) -> &mut ::protobuf::RepeatedField<Server> {
+        &mut self.servers
+    }
+
+    // Take field
+    pub fn take_servers(&mut self) -> ::protobuf::RepeatedField<Server> {
+        ::std::mem::replace(&mut self.servers, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_servers(&self) -> &[Server] {
+        &self.servers
+    }
+
+    fn get_servers_for_reflect(&self) -> &::protobuf::RepeatedField<Server> {
+        &self.servers
+    }
+
+    fn mut_servers_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Server> {
+        &mut self.servers
+    }
 }
 
 impl ::protobuf::Message for ConfState {
     fn is_initialized(&self) -> bool {
+        for v in &self.servers {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
         true
     }
 
@@ -1954,6 +1993,9 @@ impl ::protobuf::Message for ConfState {
             match field_number {
                 1 => {
                     ::protobuf::rt::read_repeated_uint64_into(wire_type, is, &mut self.nodes)?;
+                },
+                2 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.servers)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -1970,6 +2012,10 @@ impl ::protobuf::Message for ConfState {
         for value in &self.nodes {
             my_size += ::protobuf::rt::value_size(1, *value, ::protobuf::wire_format::WireTypeVarint);
         };
+        for value in &self.servers {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1978,6 +2024,11 @@ impl ::protobuf::Message for ConfState {
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
         for v in &self.nodes {
             os.write_uint64(1, *v)?;
+        };
+        for v in &self.servers {
+            os.write_tag(2, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
         };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -2028,6 +2079,11 @@ impl ::protobuf::MessageStatic for ConfState {
                     ConfState::get_nodes_for_reflect,
                     ConfState::mut_nodes_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Server>>(
+                    "servers",
+                    ConfState::get_servers_for_reflect,
+                    ConfState::mut_servers_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<ConfState>(
                     "ConfState",
                     fields,
@@ -2041,6 +2097,7 @@ impl ::protobuf::MessageStatic for ConfState {
 impl ::protobuf::Clear for ConfState {
     fn clear(&mut self) {
         self.clear_nodes();
+        self.clear_servers();
         self.unknown_fields.clear();
     }
 }
@@ -2052,6 +2109,226 @@ impl ::std::fmt::Debug for ConfState {
 }
 
 impl ::protobuf::reflect::ProtobufValue for ConfState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Message(self)
+    }
+}
+
+#[derive(PartialEq,Clone,Default)]
+pub struct Server {
+    // message fields
+    node: ::std::option::Option<u64>,
+    suffrage: ::std::option::Option<SuffrageState>,
+    // special fields
+    unknown_fields: ::protobuf::UnknownFields,
+    cached_size: ::protobuf::CachedSize,
+}
+
+// see codegen.rs for the explanation why impl Sync explicitly
+unsafe impl ::std::marker::Sync for Server {}
+
+impl Server {
+    pub fn new() -> Server {
+        ::std::default::Default::default()
+    }
+
+    pub fn default_instance() -> &'static Server {
+        static mut instance: ::protobuf::lazy::Lazy<Server> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const Server,
+        };
+        unsafe {
+            instance.get(Server::new)
+        }
+    }
+
+    // optional uint64 node = 1;
+
+    pub fn clear_node(&mut self) {
+        self.node = ::std::option::Option::None;
+    }
+
+    pub fn has_node(&self) -> bool {
+        self.node.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_node(&mut self, v: u64) {
+        self.node = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_node(&self) -> u64 {
+        self.node.unwrap_or(0)
+    }
+
+    fn get_node_for_reflect(&self) -> &::std::option::Option<u64> {
+        &self.node
+    }
+
+    fn mut_node_for_reflect(&mut self) -> &mut ::std::option::Option<u64> {
+        &mut self.node
+    }
+
+    // optional .eraftpb.SuffrageState suffrage = 2;
+
+    pub fn clear_suffrage(&mut self) {
+        self.suffrage = ::std::option::Option::None;
+    }
+
+    pub fn has_suffrage(&self) -> bool {
+        self.suffrage.is_some()
+    }
+
+    // Param is passed by value, moved
+    pub fn set_suffrage(&mut self, v: SuffrageState) {
+        self.suffrage = ::std::option::Option::Some(v);
+    }
+
+    pub fn get_suffrage(&self) -> SuffrageState {
+        self.suffrage.unwrap_or(SuffrageState::Nonvoter)
+    }
+
+    fn get_suffrage_for_reflect(&self) -> &::std::option::Option<SuffrageState> {
+        &self.suffrage
+    }
+
+    fn mut_suffrage_for_reflect(&mut self) -> &mut ::std::option::Option<SuffrageState> {
+        &mut self.suffrage
+    }
+}
+
+impl ::protobuf::Message for Server {
+    fn is_initialized(&self) -> bool {
+        true
+    }
+
+    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
+        while !is.eof()? {
+            let (field_number, wire_type) = is.read_tag_unpack()?;
+            match field_number {
+                1 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_uint64()?;
+                    self.node = ::std::option::Option::Some(tmp);
+                },
+                2 => {
+                    if wire_type != ::protobuf::wire_format::WireTypeVarint {
+                        return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));
+                    }
+                    let tmp = is.read_enum()?;
+                    self.suffrage = ::std::option::Option::Some(tmp);
+                },
+                _ => {
+                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
+                },
+            };
+        }
+        ::std::result::Result::Ok(())
+    }
+
+    // Compute sizes of nested messages
+    #[allow(unused_variables)]
+    fn compute_size(&self) -> u32 {
+        let mut my_size = 0;
+        if let Some(v) = self.node {
+            my_size += ::protobuf::rt::value_size(1, v, ::protobuf::wire_format::WireTypeVarint);
+        }
+        if let Some(v) = self.suffrage {
+            my_size += ::protobuf::rt::enum_size(2, v);
+        }
+        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
+        self.cached_size.set(my_size);
+        my_size
+    }
+
+    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
+        if let Some(v) = self.node {
+            os.write_uint64(1, v)?;
+        }
+        if let Some(v) = self.suffrage {
+            os.write_enum(2, v.value())?;
+        }
+        os.write_unknown_fields(self.get_unknown_fields())?;
+        ::std::result::Result::Ok(())
+    }
+
+    fn get_cached_size(&self) -> u32 {
+        self.cached_size.get()
+    }
+
+    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
+        &self.unknown_fields
+    }
+
+    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
+        &mut self.unknown_fields
+    }
+
+    fn as_any(&self) -> &::std::any::Any {
+        self as &::std::any::Any
+    }
+    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
+        self as &mut ::std::any::Any
+    }
+    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
+        self
+    }
+
+    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
+        ::protobuf::MessageStatic::descriptor_static(None::<Self>)
+    }
+}
+
+impl ::protobuf::MessageStatic for Server {
+    fn new() -> Server {
+        Server::new()
+    }
+
+    fn descriptor_static(_: ::std::option::Option<Server>) -> &'static ::protobuf::reflect::MessageDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                let mut fields = ::std::vec::Vec::new();
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
+                    "node",
+                    Server::get_node_for_reflect,
+                    Server::mut_node_for_reflect,
+                ));
+                fields.push(::protobuf::reflect::accessor::make_option_accessor::<_, ::protobuf::types::ProtobufTypeEnum<SuffrageState>>(
+                    "suffrage",
+                    Server::get_suffrage_for_reflect,
+                    Server::mut_suffrage_for_reflect,
+                ));
+                ::protobuf::reflect::MessageDescriptor::new::<Server>(
+                    "Server",
+                    fields,
+                    file_descriptor_proto()
+                )
+            })
+        }
+    }
+}
+
+impl ::protobuf::Clear for Server {
+    fn clear(&mut self) {
+        self.clear_node();
+        self.clear_suffrage();
+        self.unknown_fields.clear();
+    }
+}
+
+impl ::std::fmt::Debug for Server {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+        ::protobuf::text_format::fmt(self, f)
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Server {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -2534,12 +2811,65 @@ impl ::protobuf::reflect::ProtobufValue for MessageType {
 }
 
 #[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum SuffrageState {
+    Nonvoter = 0,
+    Staging = 1,
+    Voter = 2,
+}
+
+impl ::protobuf::ProtobufEnum for SuffrageState {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<SuffrageState> {
+        match value {
+            0 => ::std::option::Option::Some(SuffrageState::Nonvoter),
+            1 => ::std::option::Option::Some(SuffrageState::Staging),
+            2 => ::std::option::Option::Some(SuffrageState::Voter),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [SuffrageState] = &[
+            SuffrageState::Nonvoter,
+            SuffrageState::Staging,
+            SuffrageState::Voter,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static(_: ::std::option::Option<SuffrageState>) -> &'static ::protobuf::reflect::EnumDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::EnumDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                ::protobuf::reflect::EnumDescriptor::new("SuffrageState", file_descriptor_proto())
+            })
+        }
+    }
+}
+
+impl ::std::marker::Copy for SuffrageState {
+}
+
+impl ::protobuf::reflect::ProtobufValue for SuffrageState {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
+}
+
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
 pub enum ConfChangeType {
     AddNode = 0,
     RemoveNode = 1,
-    AddVoter = 2,
-    AddNonvoter = 3,
-    DemoteVoter = 4,
+    UpdateNode = 2,
+    AddVoter = 3,
+    AddNonvoter = 4,
+    DemoteVoter = 5,
 }
 
 impl ::protobuf::ProtobufEnum for ConfChangeType {
@@ -2551,9 +2881,10 @@ impl ::protobuf::ProtobufEnum for ConfChangeType {
         match value {
             0 => ::std::option::Option::Some(ConfChangeType::AddNode),
             1 => ::std::option::Option::Some(ConfChangeType::RemoveNode),
-            2 => ::std::option::Option::Some(ConfChangeType::AddVoter),
-            3 => ::std::option::Option::Some(ConfChangeType::AddNonvoter),
-            4 => ::std::option::Option::Some(ConfChangeType::DemoteVoter),
+            2 => ::std::option::Option::Some(ConfChangeType::UpdateNode),
+            3 => ::std::option::Option::Some(ConfChangeType::AddVoter),
+            4 => ::std::option::Option::Some(ConfChangeType::AddNonvoter),
+            5 => ::std::option::Option::Some(ConfChangeType::DemoteVoter),
             _ => ::std::option::Option::None
         }
     }
@@ -2562,6 +2893,7 @@ impl ::protobuf::ProtobufEnum for ConfChangeType {
         static values: &'static [ConfChangeType] = &[
             ConfChangeType::AddNode,
             ConfChangeType::RemoveNode,
+            ConfChangeType::UpdateNode,
             ConfChangeType::AddVoter,
             ConfChangeType::AddNonvoter,
             ConfChangeType::DemoteVoter,
@@ -2612,9 +2944,12 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x1f\n\x0breject_hint\x18\x0b\x20\x01(\x04R\nrejectHint\x12\x18\n\x07con\
     text\x18\x0c\x20\x01(\x0cR\x07context\"K\n\tHardState\x12\x12\n\x04term\
     \x18\x01\x20\x01(\x04R\x04term\x12\x12\n\x04vote\x18\x02\x20\x01(\x04R\
-    \x04vote\x12\x16\n\x06commit\x18\x03\x20\x01(\x04R\x06commit\"!\n\tConfS\
-    tate\x12\x14\n\x05nodes\x18\x01\x20\x03(\x04R\x05nodes\"\x89\x01\n\nConf\
-    Change\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x128\n\x0bchange_type\
+    \x04vote\x12\x16\n\x06commit\x18\x03\x20\x01(\x04R\x06commit\"L\n\tConfS\
+    tate\x12\x14\n\x05nodes\x18\x01\x20\x03(\x04R\x05nodes\x12)\n\x07servers\
+    \x18\x02\x20\x03(\x0b2\x0f.eraftpb.ServerR\x07servers\"P\n\x06Server\x12\
+    \x12\n\x04node\x18\x01\x20\x01(\x04R\x04node\x122\n\x08suffrage\x18\x02\
+    \x20\x01(\x0e2\x16.eraftpb.SuffrageStateR\x08suffrage\"\x89\x01\n\nConfC\
+    hange\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x128\n\x0bchange_type\
     \x18\x02\x20\x01(\x0e2\x17.eraftpb.ConfChangeTypeR\nchangeType\x12\x17\n\
     \x07node_id\x18\x03\x20\x01(\x04R\x06nodeId\x12\x18\n\x07context\x18\x04\
     \x20\x01(\x0cR\x07context*1\n\tEntryType\x12\x0f\n\x0bEntryNormal\x10\0\
@@ -2628,27 +2963,29 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x0c\x12\x15\n\x11MsgTransferLeader\x10\r\x12\x11\n\rMsgTimeoutNow\x10\
     \x0e\x12\x10\n\x0cMsgReadIndex\x10\x0f\x12\x14\n\x10MsgReadIndexResp\x10\
     \x10\x12\x15\n\x11MsgRequestPreVote\x10\x11\x12\x1d\n\x19MsgRequestPreVo\
-    teResponse\x10\x12*]\n\x0eConfChangeType\x12\x0b\n\x07AddNode\x10\0\x12\
-    \x0e\n\nRemoveNode\x10\x01\x12\x0c\n\x08AddVoter\x10\x02\x12\x0f\n\x0bAd\
-    dNonvoter\x10\x03\x12\x0f\n\x0bDemoteVoter\x10\x04B\x1a\n\x18com.pingcap\
-    .tikv.kvprotoJ\xd9\x1a\n\x06\x12\x04\0\0X\x01\n\x08\n\x01\x0c\x12\x03\0\
-    \0\x12\n\x08\n\x01\x02\x12\x03\x01\x08\x0f\n\x08\n\x01\x08\x12\x03\x03\0\
-    1\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x03\01\n\x0c\n\x05\x08\xe7\x07\0\x02\
-    \x12\x03\x03\x07\x13\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x03\x07\x13\n\
-    \x0e\n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x03\x07\x13\n\x0c\n\x05\x08\
-    \xe7\x07\0\x07\x12\x03\x03\x160\n\n\n\x02\x05\0\x12\x04\x05\0\x08\x01\n\
-    \n\n\x03\x05\0\x01\x12\x03\x05\x05\x0e\n\x0b\n\x04\x05\0\x02\0\x12\x03\
-    \x06\x04\x18\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03\x06\x04\x0f\n\x0c\n\x05\
-    \x05\0\x02\0\x02\x12\x03\x06\x16\x17\n\x0b\n\x04\x05\0\x02\x01\x12\x03\
-    \x07\x04\x18\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03\x07\x04\x13\n\x0c\n\
-    \x05\x05\0\x02\x01\x02\x12\x03\x07\x16\x17\n\n\n\x02\x04\0\x12\x04\n\0\
-    \x0f\x01\n\n\n\x03\x04\0\x01\x12\x03\n\x08\r\n\x0b\n\x04\x04\0\x02\0\x12\
-    \x03\x0b\x04(\n\x0c\n\x05\x04\0\x02\0\x04\x12\x03\x0b\x04\x0c\n\x0c\n\
-    \x05\x04\0\x02\0\x06\x12\x03\x0b\r\x16\n\x0c\n\x05\x04\0\x02\0\x01\x12\
-    \x03\x0b\x18\"\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x0b&'\n\x0b\n\x04\x04\
-    \0\x02\x01\x12\x03\x0c\x04(\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03\x0c\
-    \x04\x0c\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x0c\r\x13\n\x0c\n\x05\x04\
-    \0\x02\x01\x01\x12\x03\x0c\x18\x1c\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\
+    teResponse\x10\x12*5\n\rSuffrageState\x12\x0c\n\x08Nonvoter\x10\0\x12\
+    \x0b\n\x07Staging\x10\x01\x12\t\n\x05Voter\x10\x02*m\n\x0eConfChangeType\
+    \x12\x0b\n\x07AddNode\x10\0\x12\x0e\n\nRemoveNode\x10\x01\x12\x0e\n\nUpd\
+    ateNode\x10\x02\x12\x0c\n\x08AddVoter\x10\x03\x12\x0f\n\x0bAddNonvoter\
+    \x10\x04\x12\x0f\n\x0bDemoteVoter\x10\x05B\x1a\n\x18com.pingcap.tikv.kvp\
+    rotoJ\xab\x1e\n\x06\x12\x04\0\0f\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\
+    \x08\n\x01\x02\x12\x03\x01\x08\x0f\n\x08\n\x01\x08\x12\x03\x03\01\n\x0b\
+    \n\x04\x08\xe7\x07\0\x12\x03\x03\01\n\x0c\n\x05\x08\xe7\x07\0\x02\x12\
+    \x03\x03\x07\x13\n\r\n\x06\x08\xe7\x07\0\x02\0\x12\x03\x03\x07\x13\n\x0e\
+    \n\x07\x08\xe7\x07\0\x02\0\x01\x12\x03\x03\x07\x13\n\x0c\n\x05\x08\xe7\
+    \x07\0\x07\x12\x03\x03\x160\n\n\n\x02\x05\0\x12\x04\x05\0\x08\x01\n\n\n\
+    \x03\x05\0\x01\x12\x03\x05\x05\x0e\n\x0b\n\x04\x05\0\x02\0\x12\x03\x06\
+    \x04\x18\n\x0c\n\x05\x05\0\x02\0\x01\x12\x03\x06\x04\x0f\n\x0c\n\x05\x05\
+    \0\x02\0\x02\x12\x03\x06\x16\x17\n\x0b\n\x04\x05\0\x02\x01\x12\x03\x07\
+    \x04\x18\n\x0c\n\x05\x05\0\x02\x01\x01\x12\x03\x07\x04\x13\n\x0c\n\x05\
+    \x05\0\x02\x01\x02\x12\x03\x07\x16\x17\n\n\n\x02\x04\0\x12\x04\n\0\x0f\
+    \x01\n\n\n\x03\x04\0\x01\x12\x03\n\x08\r\n\x0b\n\x04\x04\0\x02\0\x12\x03\
+    \x0b\x04(\n\x0c\n\x05\x04\0\x02\0\x04\x12\x03\x0b\x04\x0c\n\x0c\n\x05\
+    \x04\0\x02\0\x06\x12\x03\x0b\r\x16\n\x0c\n\x05\x04\0\x02\0\x01\x12\x03\
+    \x0b\x18\"\n\x0c\n\x05\x04\0\x02\0\x03\x12\x03\x0b&'\n\x0b\n\x04\x04\0\
+    \x02\x01\x12\x03\x0c\x04(\n\x0c\n\x05\x04\0\x02\x01\x04\x12\x03\x0c\x04\
+    \x0c\n\x0c\n\x05\x04\0\x02\x01\x05\x12\x03\x0c\r\x13\n\x0c\n\x05\x04\0\
+    \x02\x01\x01\x12\x03\x0c\x18\x1c\n\x0c\n\x05\x04\0\x02\x01\x03\x12\x03\
     \x0c&'\n\x0b\n\x04\x04\0\x02\x02\x12\x03\r\x04(\n\x0c\n\x05\x04\0\x02\
     \x02\x04\x12\x03\r\x04\x0c\n\x0c\n\x05\x04\0\x02\x02\x05\x12\x03\r\r\x13\
     \n\x0c\n\x05\x04\0\x02\x02\x01\x12\x03\r\x18\x1d\n\x0c\n\x05\x04\0\x02\
@@ -2764,36 +3101,57 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x02\x12\x03D\x04\x1f\n\x0c\n\x05\x04\x04\x02\x02\x04\x12\x03D\x04\x0c\n\
     \x0c\n\x05\x04\x04\x02\x02\x05\x12\x03D\r\x13\n\x0c\n\x05\x04\x04\x02\
     \x02\x01\x12\x03D\x14\x1a\n\x0c\n\x05\x04\x04\x02\x02\x03\x12\x03D\x1d\
-    \x1e\n\n\n\x02\x04\x05\x12\x04G\0I\x01\n\n\n\x03\x04\x05\x01\x12\x03G\
-    \x08\x11\n\x0b\n\x04\x04\x05\x02\0\x12\x03H\x04\x1e\n\x0c\n\x05\x04\x05\
-    \x02\0\x04\x12\x03H\x04\x0c\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x03H\r\x13\
-    \n\x0c\n\x05\x04\x05\x02\0\x01\x12\x03H\x14\x19\n\x0c\n\x05\x04\x05\x02\
-    \0\x03\x12\x03H\x1c\x1d\n\n\n\x02\x05\x02\x12\x04K\0Q\x01\n\n\n\x03\x05\
-    \x02\x01\x12\x03K\x05\x13\n\x0b\n\x04\x05\x02\x02\0\x12\x03L\x04\x14\n\
-    \x0c\n\x05\x05\x02\x02\0\x01\x12\x03L\x04\x0b\n\x0c\n\x05\x05\x02\x02\0\
-    \x02\x12\x03L\x12\x13\n\x0b\n\x04\x05\x02\x02\x01\x12\x03M\x04\x14\n\x0c\
-    \n\x05\x05\x02\x02\x01\x01\x12\x03M\x04\x0e\n\x0c\n\x05\x05\x02\x02\x01\
-    \x02\x12\x03M\x12\x13\n\x0b\n\x04\x05\x02\x02\x02\x12\x03N\x04\x14\n\x0c\
-    \n\x05\x05\x02\x02\x02\x01\x12\x03N\x04\x0c\n\x0c\n\x05\x05\x02\x02\x02\
-    \x02\x12\x03N\x12\x13\n\x0b\n\x04\x05\x02\x02\x03\x12\x03O\x04\x14\n\x0c\
-    \n\x05\x05\x02\x02\x03\x01\x12\x03O\x04\x0f\n\x0c\n\x05\x05\x02\x02\x03\
-    \x02\x12\x03O\x12\x13\n\x0b\n\x04\x05\x02\x02\x04\x12\x03P\x04\x14\n\x0c\
-    \n\x05\x05\x02\x02\x04\x01\x12\x03P\x04\x0f\n\x0c\n\x05\x05\x02\x02\x04\
-    \x02\x12\x03P\x12\x13\n\n\n\x02\x04\x06\x12\x04S\0X\x01\n\n\n\x03\x04\
-    \x06\x01\x12\x03S\x08\x12\n\x0b\n\x04\x04\x06\x02\0\x12\x03T\x040\n\x0c\
-    \n\x05\x04\x06\x02\0\x04\x12\x03T\x04\x0c\n\x0c\n\x05\x04\x06\x02\0\x05\
-    \x12\x03T\r\x13\n\x0c\n\x05\x04\x06\x02\0\x01\x12\x03T\x1d\x1f\n\x0c\n\
-    \x05\x04\x06\x02\0\x03\x12\x03T./\n\x0b\n\x04\x04\x06\x02\x01\x12\x03U\
-    \x040\n\x0c\n\x05\x04\x06\x02\x01\x04\x12\x03U\x04\x0c\n\x0c\n\x05\x04\
-    \x06\x02\x01\x06\x12\x03U\r\x1b\n\x0c\n\x05\x04\x06\x02\x01\x01\x12\x03U\
-    \x1d(\n\x0c\n\x05\x04\x06\x02\x01\x03\x12\x03U./\n\x0b\n\x04\x04\x06\x02\
-    \x02\x12\x03V\x040\n\x0c\n\x05\x04\x06\x02\x02\x04\x12\x03V\x04\x0c\n\
-    \x0c\n\x05\x04\x06\x02\x02\x05\x12\x03V\r\x13\n\x0c\n\x05\x04\x06\x02\
-    \x02\x01\x12\x03V\x1d$\n\x0c\n\x05\x04\x06\x02\x02\x03\x12\x03V./\n\x0b\
-    \n\x04\x04\x06\x02\x03\x12\x03W\x040\n\x0c\n\x05\x04\x06\x02\x03\x04\x12\
-    \x03W\x04\x0c\n\x0c\n\x05\x04\x06\x02\x03\x05\x12\x03W\r\x12\n\x0c\n\x05\
-    \x04\x06\x02\x03\x01\x12\x03W\x1d$\n\x0c\n\x05\x04\x06\x02\x03\x03\x12\
-    \x03W./\
+    \x1e\n\n\n\x02\x04\x05\x12\x04G\0K\x01\n\n\n\x03\x04\x05\x01\x12\x03G\
+    \x08\x11\n:\n\x04\x04\x05\x02\0\x12\x03I\x04\x1e\x1a-\x20use\x20servers\
+    \x20after\x20non-voting\x20member\x20feature\n\n\x0c\n\x05\x04\x05\x02\0\
+    \x04\x12\x03I\x04\x0c\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x03I\r\x13\n\x0c\
+    \n\x05\x04\x05\x02\0\x01\x12\x03I\x14\x19\n\x0c\n\x05\x04\x05\x02\0\x03\
+    \x12\x03I\x1c\x1d\n\x0b\n\x04\x04\x05\x02\x01\x12\x03J\x04\x20\n\x0c\n\
+    \x05\x04\x05\x02\x01\x04\x12\x03J\x04\x0c\n\x0c\n\x05\x04\x05\x02\x01\
+    \x06\x12\x03J\r\x13\n\x0c\n\x05\x04\x05\x02\x01\x01\x12\x03J\x14\x1b\n\
+    \x0c\n\x05\x04\x05\x02\x01\x03\x12\x03J\x1e\x1f\n\n\n\x02\x04\x06\x12\
+    \x04M\0P\x01\n\n\n\x03\x04\x06\x01\x12\x03M\x08\x0e\n\x0b\n\x04\x04\x06\
+    \x02\0\x12\x03N\x04\x1d\n\x0c\n\x05\x04\x06\x02\0\x04\x12\x03N\x04\x0c\n\
+    \x0c\n\x05\x04\x06\x02\0\x05\x12\x03N\r\x13\n\x0c\n\x05\x04\x06\x02\0\
+    \x01\x12\x03N\x14\x18\n\x0c\n\x05\x04\x06\x02\0\x03\x12\x03N\x1b\x1c\n\
+    \x0b\n\x04\x04\x06\x02\x01\x12\x03O\x04(\n\x0c\n\x05\x04\x06\x02\x01\x04\
+    \x12\x03O\x04\x0c\n\x0c\n\x05\x04\x06\x02\x01\x06\x12\x03O\r\x1a\n\x0c\n\
+    \x05\x04\x06\x02\x01\x01\x12\x03O\x1b#\n\x0c\n\x05\x04\x06\x02\x01\x03\
+    \x12\x03O&'\n\n\n\x02\x05\x02\x12\x04R\0V\x01\n\n\n\x03\x05\x02\x01\x12\
+    \x03R\x05\x12\n\x0b\n\x04\x05\x02\x02\0\x12\x03S\x04\x11\n\x0c\n\x05\x05\
+    \x02\x02\0\x01\x12\x03S\x04\x0c\n\x0c\n\x05\x05\x02\x02\0\x02\x12\x03S\
+    \x0f\x10\n\x0b\n\x04\x05\x02\x02\x01\x12\x03T\x04\x11\n\x0c\n\x05\x05\
+    \x02\x02\x01\x01\x12\x03T\x04\x0b\n\x0c\n\x05\x05\x02\x02\x01\x02\x12\
+    \x03T\x0f\x10\n\x0b\n\x04\x05\x02\x02\x02\x12\x03U\x04\x11\n\x0c\n\x05\
+    \x05\x02\x02\x02\x01\x12\x03U\x04\t\n\x0c\n\x05\x05\x02\x02\x02\x02\x12\
+    \x03U\x0f\x10\n\n\n\x02\x05\x03\x12\x04X\0_\x01\n\n\n\x03\x05\x03\x01\
+    \x12\x03X\x05\x13\n\x0b\n\x04\x05\x03\x02\0\x12\x03Y\x04\x14\n\x0c\n\x05\
+    \x05\x03\x02\0\x01\x12\x03Y\x04\x0b\n\x0c\n\x05\x05\x03\x02\0\x02\x12\
+    \x03Y\x12\x13\n\x0b\n\x04\x05\x03\x02\x01\x12\x03Z\x04\x14\n\x0c\n\x05\
+    \x05\x03\x02\x01\x01\x12\x03Z\x04\x0e\n\x0c\n\x05\x05\x03\x02\x01\x02\
+    \x12\x03Z\x12\x13\n\x0b\n\x04\x05\x03\x02\x02\x12\x03[\x04\x14\n\x0c\n\
+    \x05\x05\x03\x02\x02\x01\x12\x03[\x04\x0e\n\x0c\n\x05\x05\x03\x02\x02\
+    \x02\x12\x03[\x12\x13\n\x0b\n\x04\x05\x03\x02\x03\x12\x03\\\x04\x14\n\
+    \x0c\n\x05\x05\x03\x02\x03\x01\x12\x03\\\x04\x0c\n\x0c\n\x05\x05\x03\x02\
+    \x03\x02\x12\x03\\\x12\x13\n\x0b\n\x04\x05\x03\x02\x04\x12\x03]\x04\x14\
+    \n\x0c\n\x05\x05\x03\x02\x04\x01\x12\x03]\x04\x0f\n\x0c\n\x05\x05\x03\
+    \x02\x04\x02\x12\x03]\x12\x13\n\x0b\n\x04\x05\x03\x02\x05\x12\x03^\x04\
+    \x14\n\x0c\n\x05\x05\x03\x02\x05\x01\x12\x03^\x04\x0f\n\x0c\n\x05\x05\
+    \x03\x02\x05\x02\x12\x03^\x12\x13\n\n\n\x02\x04\x07\x12\x04a\0f\x01\n\n\
+    \n\x03\x04\x07\x01\x12\x03a\x08\x12\n\x0b\n\x04\x04\x07\x02\0\x12\x03b\
+    \x040\n\x0c\n\x05\x04\x07\x02\0\x04\x12\x03b\x04\x0c\n\x0c\n\x05\x04\x07\
+    \x02\0\x05\x12\x03b\r\x13\n\x0c\n\x05\x04\x07\x02\0\x01\x12\x03b\x1d\x1f\
+    \n\x0c\n\x05\x04\x07\x02\0\x03\x12\x03b./\n\x0b\n\x04\x04\x07\x02\x01\
+    \x12\x03c\x040\n\x0c\n\x05\x04\x07\x02\x01\x04\x12\x03c\x04\x0c\n\x0c\n\
+    \x05\x04\x07\x02\x01\x06\x12\x03c\r\x1b\n\x0c\n\x05\x04\x07\x02\x01\x01\
+    \x12\x03c\x1d(\n\x0c\n\x05\x04\x07\x02\x01\x03\x12\x03c./\n\x0b\n\x04\
+    \x04\x07\x02\x02\x12\x03d\x040\n\x0c\n\x05\x04\x07\x02\x02\x04\x12\x03d\
+    \x04\x0c\n\x0c\n\x05\x04\x07\x02\x02\x05\x12\x03d\r\x13\n\x0c\n\x05\x04\
+    \x07\x02\x02\x01\x12\x03d\x1d$\n\x0c\n\x05\x04\x07\x02\x02\x03\x12\x03d.\
+    /\n\x0b\n\x04\x04\x07\x02\x03\x12\x03e\x040\n\x0c\n\x05\x04\x07\x02\x03\
+    \x04\x12\x03e\x04\x0c\n\x0c\n\x05\x04\x07\x02\x03\x05\x12\x03e\r\x12\n\
+    \x0c\n\x05\x04\x07\x02\x03\x01\x12\x03e\x1d$\n\x0c\n\x05\x04\x07\x02\x03\
+    \x03\x12\x03e./\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {

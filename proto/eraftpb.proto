@@ -70,15 +70,29 @@ message HardState {
 }
 
 message ConfState {
+    // use servers after non-voting member feature
     repeated uint64 nodes = 1;
+    repeated Server servers = 2;
+}
+
+message Server {
+    optional uint64 node = 1;
+    optional SuffrageState suffrage = 2;
+}
+
+enum SuffrageState {
+    Nonvoter = 0;
+    Staging  = 1;
+    Voter    = 2;
 }
 
 enum ConfChangeType {
     AddNode     = 0;
     RemoveNode  = 1;
-    AddVoter    = 2;
-    AddNonvoter = 3;
-    DemoteVoter = 4;
+    UpdateNode  = 2;
+    AddVoter    = 3;
+    AddNonvoter = 4;
+    DemoteVoter = 5;
 }
 
 message ConfChange {

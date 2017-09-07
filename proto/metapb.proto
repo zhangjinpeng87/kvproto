@@ -2,6 +2,7 @@ syntax = "proto2";
 package metapb;
 
 import "gogoproto/gogo.proto";
+import "eraftpb.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -21,12 +22,6 @@ enum StoreState {
     Up        = 0;
     Offline   = 1;
     Tombstone = 2;
-}
-
-enum SuffrageState {
-    Nonvoter = 0;
-    Staging  = 1;
-    Voter    = 2;
 }
 
 // Case insensitive key/value for replica constraints.
@@ -60,7 +55,7 @@ message Region {
 }
 
 message Peer {
-    optional uint64 id              = 1 [(gogoproto.nullable) = false];
-    optional uint64 store_id        = 2 [(gogoproto.nullable) = false];
-    optional SuffrageState suffrage = 3;
+    optional uint64 id       = 1 [(gogoproto.nullable) = false];
+    optional uint64 store_id = 2 [(gogoproto.nullable) = false];
+    optional eraftpb.SuffrageState suffrage = 3;
 }

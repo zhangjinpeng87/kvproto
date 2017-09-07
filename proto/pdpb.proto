@@ -233,9 +233,10 @@ message RegionHeartbeatRequest {
 enum ConfChangeType {
     AddNode     = 0;
     RemoveNode  = 1;
-    AddVoter    = 2;
-    AddNonvoter = 3;
-    DemoteVoter = 4;
+    UpdateNode  = 2;
+    AddVoter    = 3;
+    AddNonvoter = 4;
+    DemoteVoter = 5;
 }
 
 message ChangePeer {
