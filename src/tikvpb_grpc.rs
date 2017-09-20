@@ -165,6 +165,13 @@ const METHOD_TIKV_MVCC_GET_BY_START_TS: ::grpcio::Method<super::kvrpcpb::MvccGet
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_FAIL_POINT: ::grpcio::Method<super::tikvpb::FailPointRequest, super::tikvpb::FailPointResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/FailPoint",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 pub struct TikvClient {
     client: ::grpcio::Client,
 }
@@ -495,6 +502,22 @@ impl TikvClient {
     pub fn mvcc_get_by_start_ts_async(&self, req: super::kvrpcpb::MvccGetByStartTsRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::MvccGetByStartTsResponse> {
         self.mvcc_get_by_start_ts_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn fail_point_opt(&self, req: super::tikvpb::FailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::tikvpb::FailPointResponse> {
+        self.client.unary_call(&METHOD_TIKV_FAIL_POINT, req, opt)
+    }
+
+    pub fn fail_point(&self, req: super::tikvpb::FailPointRequest) -> ::grpcio::Result<super::tikvpb::FailPointResponse> {
+        self.fail_point_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn fail_point_async_opt(&self, req: super::tikvpb::FailPointRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::tikvpb::FailPointResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_FAIL_POINT, req, opt)
+    }
+
+    pub fn fail_point_async(&self, req: super::tikvpb::FailPointRequest) -> ::grpcio::ClientUnaryReceiver<super::tikvpb::FailPointResponse> {
+        self.fail_point_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -522,6 +545,7 @@ pub trait Tikv {
     fn snapshot(&self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::raft_serverpb::SnapshotChunk>, sink: ::grpcio::ClientStreamingSink<super::raft_serverpb::Done>);
     fn mvcc_get_by_key(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
     fn mvcc_get_by_start_ts(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
+    fn fail_point(&self, ctx: ::grpcio::RpcContext, req: super::tikvpb::FailPointRequest, sink: ::grpcio::UnarySink<super::tikvpb::FailPointResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -609,6 +633,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_MVCC_GET_BY_START_TS, move |ctx, req, resp| {
         instance.mvcc_get_by_start_ts(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_FAIL_POINT, move |ctx, req, resp| {
+        instance.fail_point(ctx, req, resp)
     });
     builder.build()
 }
