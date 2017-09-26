@@ -1,8 +1,8 @@
 syntax = "proto2";
 package metapb;
 
-import "gogoproto/gogo.proto";
 import "eraftpb.proto";
+import "gogoproto/gogo.proto";
 
 option (gogoproto.marshaler_all) = true;
 option (gogoproto.sizer_all) = true;
@@ -55,7 +55,7 @@ message Region {
 }
 
 message Peer {
-    optional uint64 id       = 1 [(gogoproto.nullable) = false];
-    optional uint64 store_id = 2 [(gogoproto.nullable) = false];
+    optional uint64                id       = 1 [(gogoproto.nullable) = false];
+    optional uint64                store_id = 2 [(gogoproto.nullable) = false];
     optional eraftpb.SuffrageState suffrage = 3;
 }

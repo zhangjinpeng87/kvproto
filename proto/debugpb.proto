@@ -1,0 +1,101 @@
+syntax = "proto3";
+package debugpb;
+
+import "eraftpb.proto";
+import "kvrpcpb.proto";
+import "raft_serverpb.proto";
+import "gogoproto/gogo.proto";
+
+option (gogoproto.sizer_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+
+option java_package = "com.pingcap.tikv.kvproto";
+
+// Debug service for TiKV.
+//
+// Errors are defined as follow:
+//   - OK: Okay, we are good!
+//   - UNKNOWN: For unknown error.
+//   - INVALID_ARGUMENT: Something goes wrong within requests.
+//   - NOT_FOUND: It is key or region not found, it's based on context, detailed
+//                reason can be found in grpc message.
+// Note: It bypasses raft layer.
+service Debug {
+    // Read a value arbitrarily for a key.
+    // Note: Server uses key directly w/o any encoding.
+    rpc get(GetRequest) returns (GetResponse) {}
+
+    // Read raft info.
+    rpc raft_log(RaftLogRequest) returns (RaftLogResponse) {}
+    rpc region_info(RegionInfoRequest) returns (RegionInfoResponse) {}
+
+    // Calculate size of a region.
+    // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
+    rpc region_size(RegionSizeRequest) returns (RegionSizeResponse) {}
+
+    // Scan a specific range.
+    // Note: DO NOT CALL IT IN PRODUCTION, it's really expensive.
+    //       Server uses keys directly w/o any encoding.
+    rpc scan_mvcc(ScanMvccRequest) returns (stream ScanMvccResponse) {}
+}
+
+enum DB {
+    INVALID = 0;
+    KV = 1;
+    RAFT = 2;
+}
+
+message GetRequest {
+    DB db = 1;
+    string cf = 2;
+    bytes key = 3;
+}
+
+message GetResponse {
+    bytes value = 1;
+}
+
+message RaftLogRequest {
+    uint64 region_id = 1;
+    uint64 log_index = 2;
+}
+
+message RaftLogResponse {
+    eraftpb.Entry entry = 1;
+}
+
+message RegionInfoRequest {
+    uint64 region_id = 1;
+}
+
+message RegionInfoResponse {
+    raft_serverpb.RaftLocalState raft_local_state = 1;
+    raft_serverpb.RaftApplyState raft_apply_state = 2;
+    raft_serverpb.RegionLocalState region_local_state = 3;
+}
+
+message RegionSizeRequest {
+    uint64 region_id = 1;
+    repeated string cfs = 2;
+}
+
+message RegionSizeResponse {
+    message Entry {
+        string cf = 1;
+        uint64 size = 2;
+    }
+
+    repeated Entry entries = 1;
+}
+
+message ScanMvccRequest {
+    bytes from_key = 1;
+    bytes to_key = 2;
+    uint64 limit = 3;
+}
+
+message ScanMvccResponse {
+    bytes key = 1;
+    kvrpcpb.MvccInfo info = 2;
+}
