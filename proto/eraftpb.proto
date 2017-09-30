@@ -71,19 +71,9 @@ message HardState {
 }
 
 message ConfState {
-    repeated uint64 nodes = 1;
-    repeated Server servers = 2;
-}
-
-message Server {
-    optional uint64 node = 1;
-    optional SuffrageState suffrage = 2;
-}
-
-enum SuffrageState {
-    Nonvoter = 0;
-    Staging  = 1;
-    Voter    = 2;
+    repeated uint64 nodes     = 1;  // voters
+    repeated uint64 nonvoters = 2;
+    repeated uint64 stagings  = 3;
 }
 
 enum ConfChangeType {
