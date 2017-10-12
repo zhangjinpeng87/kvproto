@@ -71,18 +71,15 @@ message HardState {
 }
 
 message ConfState {
-    repeated uint64 nodes     = 1;  // voters
-    repeated uint64 nonvoters = 2;
-    repeated uint64 stagings  = 3;
+    repeated uint64 nodes    = 1;  // Voters
+    repeated uint64 learners = 2;  // Nonvoters
 }
 
 enum ConfChangeType {
-    AddNode     = 0;
-    RemoveNode  = 1;
-    UpdateNode  = 2;
-    AddVoter    = 3;
-    AddNonvoter = 4;
-    DemoteVoter = 5;
+    AddNode    = 0;
+    RemoveNode = 1;
+    UpdateNode = 2;
+    AddLearner = 3;
 }
 
 message ConfChange {

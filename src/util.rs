@@ -7,9 +7,7 @@ impl From<pdpb::ConfChangeType> for eraftpb::ConfChangeType {
             pdpb::ConfChangeType::AddNode => eraftpb::ConfChangeType::AddNode,
             pdpb::ConfChangeType::RemoveNode => eraftpb::ConfChangeType::RemoveNode,
             pdpb::ConfChangeType::UpdateNode => eraftpb::ConfChangeType::UpdateNode,
-            pdpb::ConfChangeType::AddVoter => eraftpb::ConfChangeType::AddVoter,
-            pdpb::ConfChangeType::AddNonvoter => eraftpb::ConfChangeType::AddNonvoter,
-            pdpb::ConfChangeType::DemoteVoter => eraftpb::ConfChangeType::DemoteVoter,
+            pdpb::ConfChangeType::AddLearner => eraftpb::ConfChangeType::AddLearner,
         }
     }
 }
@@ -20,9 +18,7 @@ impl From<eraftpb::ConfChangeType> for pdpb::ConfChangeType {
             eraftpb::ConfChangeType::AddNode => pdpb::ConfChangeType::AddNode,
             eraftpb::ConfChangeType::RemoveNode => pdpb::ConfChangeType::RemoveNode,
             eraftpb::ConfChangeType::UpdateNode => pdpb::ConfChangeType::UpdateNode,
-            eraftpb::ConfChangeType::AddVoter => pdpb::ConfChangeType::AddVoter,
-            eraftpb::ConfChangeType::AddNonvoter => pdpb::ConfChangeType::AddNonvoter,
-            eraftpb::ConfChangeType::DemoteVoter => pdpb::ConfChangeType::DemoteVoter,
+            eraftpb::ConfChangeType::AddLearner => pdpb::ConfChangeType::AddLearner,
         }
     }
 }

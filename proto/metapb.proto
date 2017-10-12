@@ -53,14 +53,8 @@ message Region {
     repeated Peer   peers               = 5;
 }
 
-enum Suffrage {
-    Nonvoter = 0;
-    Staging  = 1;
-    Voter    = 2;
-}
-
 message Peer {
-    optional uint64   id       = 1 [(gogoproto.nullable) = false];
-    optional uint64   store_id = 2 [(gogoproto.nullable) = false];
-    optional Suffrage suffrage = 3;
+    optional uint64   id         = 1 [(gogoproto.nullable) = false];
+    optional uint64   store_id   = 2 [(gogoproto.nullable) = false];
+    optional bool     is_learner = 3;
 }
