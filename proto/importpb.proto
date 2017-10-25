@@ -12,6 +12,7 @@ option (gogoproto.unmarshaler_all) = true;
 option java_package = "com.pingcap.tikv.kvproto";
 
 service Import {
+    rpc IngestSST(IngestSSTRequest) returns (IngestSSTResponse) {}
     rpc UploadSST(stream UploadSSTRequest) returns (UploadSSTResponse) {}
 }
 
@@ -33,6 +34,15 @@ message SSTHandle {
     uint64 region_id = 3;
     // The epoch of the region when this file is uploaded.
     metapb.RegionEpoch region_epoch = 4;
+}
+
+message IngestSSTRequest {
+    // The handles of the files that will be ingested.
+    // Only files of the same column family can be ingested atomically for now.
+    repeated SSTHandle handles = 1;
+}
+
+message IngestSSTResponse {
 }
 
 message UploadSSTRequest {
