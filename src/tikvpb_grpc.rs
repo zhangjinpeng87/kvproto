@@ -95,6 +95,13 @@ const METHOD_TIKV_KV_GC: ::grpcio::Method<super::kvrpcpb::GCRequest, super::kvrp
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_KV_DELETE_RANGE: ::grpcio::Method<super::kvrpcpb::DeleteRangeRequest, super::kvrpcpb::DeleteRangeResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/KvDeleteRange",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 const METHOD_TIKV_RAW_GET: ::grpcio::Method<super::kvrpcpb::RawGetRequest, super::kvrpcpb::RawGetResponse> = ::grpcio::Method {
     ty: ::grpcio::MethodType::Unary,
     name: "/tikvpb.Tikv/RawGet",
@@ -359,6 +366,22 @@ impl TikvClient {
         self.kv_gc_async_opt(req, ::grpcio::CallOption::default())
     }
 
+    pub fn kv_delete_range_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::DeleteRangeResponse> {
+        self.client.unary_call(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
+    }
+
+    pub fn kv_delete_range(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpcio::Result<super::kvrpcpb::DeleteRangeResponse> {
+        self.kv_delete_range_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn kv_delete_range_async_opt(&self, req: super::kvrpcpb::DeleteRangeRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
+        self.client.unary_call_async(&METHOD_TIKV_KV_DELETE_RANGE, req, opt)
+    }
+
+    pub fn kv_delete_range_async(&self, req: super::kvrpcpb::DeleteRangeRequest) -> ::grpcio::ClientUnaryReceiver<super::kvrpcpb::DeleteRangeResponse> {
+        self.kv_delete_range_async_opt(req, ::grpcio::CallOption::default())
+    }
+
     pub fn raw_get_opt(&self, req: super::kvrpcpb::RawGetRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::RawGetResponse> {
         self.client.unary_call(&METHOD_TIKV_RAW_GET, req, opt)
     }
@@ -527,6 +550,7 @@ pub trait Tikv {
     fn kv_scan_lock(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ScanLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ScanLockResponse>);
     fn kv_resolve_lock(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::ResolveLockRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::ResolveLockResponse>);
     fn kv_gc(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::GCRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::GCResponse>);
+    fn kv_delete_range(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DeleteRangeRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DeleteRangeResponse>);
     fn raw_get(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawGetRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawGetResponse>);
     fn raw_put(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawPutRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawPutResponse>);
     fn raw_delete(&self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::RawDeleteRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::RawDeleteResponse>);
@@ -585,6 +609,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_KV_GC, move |ctx, req, resp| {
         instance.kv_gc(ctx, req, resp)
+    });
+    let instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_KV_DELETE_RANGE, move |ctx, req, resp| {
+        instance.kv_delete_range(ctx, req, resp)
     });
     let instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_TIKV_RAW_GET, move |ctx, req, resp| {
