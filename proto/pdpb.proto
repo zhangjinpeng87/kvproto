@@ -223,6 +223,8 @@ message RegionHeartbeatRequest {
     // Keys read/written during this period.
     uint64 keys_written = 8;
     uint64 keys_read = 9;
+    // Approximate region size.
+    uint64 approximate_size = 10;
 }
 
 // A clone of eraftpb.ConfChangeType, it exists because proto2 enums cannot be
@@ -322,6 +324,10 @@ message StoreStats {
     uint64 bytes_written = 11;
     // Keys written for the store.
     uint64 keys_written = 12;
+    // Bytes read for the store.
+    uint64 bytes_read = 13;
+    // Keys read for the store.
+    uint64 keys_read = 14;
 }
 
 message StoreHeartbeatRequest {

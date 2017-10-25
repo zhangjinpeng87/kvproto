@@ -44,6 +44,8 @@ message Context {
     uint64 term = 5;
     CommandPri priority = 6;
     IsolationLevel isolation_level = 7;
+    bool not_fill_cache = 8;
+    bool sync_log = 9;
 }
 
 message GetRequest {
@@ -174,11 +176,17 @@ message ScanLockResponse {
     repeated LockInfo locks = 3;
 }
 
+message TxnInfo {
+    uint64 txn = 1;
+    uint64 status = 2;
+}
+
 message ResolveLockRequest {
     Context context = 1;
     uint64 start_version  = 2;
     // If the txn is rolled back, do not set it.
     uint64 commit_version = 3;
+    repeated TxnInfo txn_infos = 4;
 }
 
 message ResolveLockResponse {
@@ -278,4 +286,15 @@ message MvccGetByStartTsResponse {
     string error = 2;
     bytes key = 3;
     MvccInfo info = 4;
+}
+
+message SplitRegionRequest {
+    Context context = 1;
+    bytes split_key = 2;
+}
+
+message SplitRegionResponse {
+    errorpb.Error region_error = 1;
+    metapb.Region left  = 2;
+    metapb.Region right = 3;
 }

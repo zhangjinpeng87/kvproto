@@ -10,6 +10,6 @@ name = "kvproto"
 protobuf = "1.*"
 futures = "0.1"
 
-[dependencies.grpc]
+[dependencies.grpcio]
 git = "https://github.com/pingcap/grpc-rs.git"
 branch = "ov/alarm-queue"
