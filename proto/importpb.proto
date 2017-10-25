@@ -17,7 +17,7 @@ service Import {
 
 message SSTMeta {
     // The size of the file.
-    uint64 size = 1;
+    uint64 len = 1;
     // The CRC32 checksum of the file.
     uint32 crc32 = 2;
     // The handle which identifies the file.
