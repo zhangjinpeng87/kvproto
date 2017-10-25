@@ -147,32 +147,57 @@ message VerifyHashRequest {
 message VerifyHashResponse {
 }
 
+enum MergeDirection {
+    Up = 0;
+    Down = 1;
+}
+
+message PreMergeRequest {
+    optional uint64 min_index = 1;
+    optional MergeDirection direction = 2;
+}
+
+message PreMergeResponse {}
+
+message MergeRequest {
+    optional uint64 source_region_id = 1;
+    repeated eraftpb.Entry entries = 2;
+}
+
+message MergeResponse {}
+
 enum AdminCmdType {
-    InvalidAdmin    = 0;
-    ChangePeer      = 1;
-    Split           = 2;
-    CompactLog      = 3;
-    TransferLeader  = 4;
-    ComputeHash     = 5;
-    VerifyHash      = 6;
+    InvalidAdmin = 0;
+    ChangePeer = 1;
+    Split = 2;
+    CompactLog = 3;
+    TransferLeader = 4;
+    ComputeHash = 5;
+    VerifyHash = 6;
+    PreMerge = 7;
+    Merge = 8;
 }
 
 message AdminRequest {
-    optional AdminCmdType cmd_type                  = 1;
-    optional ChangePeerRequest change_peer          = 2;
-    optional SplitRequest split                     = 3;
-    optional CompactLogRequest compact_log          = 4;
-    optional TransferLeaderRequest transfer_leader  = 5;
-    optional VerifyHashRequest verify_hash          = 6;
+    optional AdminCmdType cmd_type = 1;
+    optional ChangePeerRequest change_peer = 2;
+    optional SplitRequest split = 3;
+    optional CompactLogRequest compact_log = 4;
+    optional TransferLeaderRequest transfer_leader = 5;
+    optional VerifyHashRequest verify_hash = 6;
+    optional PreMergeRequest pre_merge = 7;
+    optional MergeRequest merge = 8;
 }
 
 message AdminResponse {
-    optional AdminCmdType cmd_type                  = 1;
-    optional ChangePeerResponse change_peer         = 2;
-    optional SplitResponse split                    = 3;
-    optional CompactLogResponse compact_log         = 4;
+    optional AdminCmdType cmd_type = 1;
+    optional ChangePeerResponse change_peer = 2;
+    optional SplitResponse split = 3;
+    optional CompactLogResponse compact_log = 4;
     optional TransferLeaderResponse transfer_leader = 5;
-    optional VerifyHashResponse verify_hash         = 6;
+    optional VerifyHashResponse verify_hash = 6;
+    optional PreMergeResponse pre_merge = 7;
+    optional MergeResponse merge = 8;
 }
 
 // For get the leader of the region.
