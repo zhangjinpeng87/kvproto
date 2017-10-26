@@ -3,6 +3,8 @@ syntax = "proto3";
 package importpb;
 
 import "metapb.proto";
+import "kvrpcpb.proto";
+import "errorpb.proto";
 import "gogoproto/gogo.proto";
 
 option (gogoproto.sizer_all) = true;
@@ -37,12 +39,14 @@ message SSTHandle {
 }
 
 message IngestSSTRequest {
+    kvrpcpb.Context context = 1;
     // The handles of the files that will be ingested.
     // Only files of the same column family can be ingested atomically for now.
-    repeated SSTHandle handles = 1;
+    repeated SSTHandle handles = 2;
 }
 
 message IngestSSTResponse {
+    errorpb.Error error = 1;
 }
 
 message UploadSSTRequest {
