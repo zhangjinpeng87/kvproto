@@ -26,7 +26,7 @@ message SSTMeta {
 
 message SSTHandle {
     // The UUID of the file, to distinguish files with the same data.
-    string uuid = 1;
+    bytes uuid = 1;
     // The CF that this file will be ingested to.
     string cfname = 2;
     // The region that this file will be ingested to.
