@@ -28,7 +28,7 @@ message SSTHandle {
     // The UUID of the file, to distinguish files with the same data.
     bytes uuid = 1;
     // The CF that this file will be ingested to.
-    string cfname = 2;
+    string cf_name = 2;
     // The region that this file will be ingested to.
     uint64 region_id = 3;
     // The epoch of the region when this file is uploaded.

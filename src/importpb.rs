@@ -302,7 +302,7 @@ impl ::protobuf::reflect::ProtobufValue for SSTMeta {
 pub struct SSTHandle {
     // message fields
     pub uuid: ::std::vec::Vec<u8>,
-    pub cfname: ::std::string::String,
+    pub cf_name: ::std::string::String,
     pub region_id: u64,
     pub region_epoch: ::protobuf::SingularPtrField<super::metapb::RegionEpoch>,
     // special fields
@@ -362,38 +362,38 @@ impl SSTHandle {
         &mut self.uuid
     }
 
-    // string cfname = 2;
+    // string cf_name = 2;
 
-    pub fn clear_cfname(&mut self) {
-        self.cfname.clear();
+    pub fn clear_cf_name(&mut self) {
+        self.cf_name.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_cfname(&mut self, v: ::std::string::String) {
-        self.cfname = v;
+    pub fn set_cf_name(&mut self, v: ::std::string::String) {
+        self.cf_name = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_cfname(&mut self) -> &mut ::std::string::String {
-        &mut self.cfname
+    pub fn mut_cf_name(&mut self) -> &mut ::std::string::String {
+        &mut self.cf_name
     }
 
     // Take field
-    pub fn take_cfname(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.cfname, ::std::string::String::new())
+    pub fn take_cf_name(&mut self) -> ::std::string::String {
+        ::std::mem::replace(&mut self.cf_name, ::std::string::String::new())
     }
 
-    pub fn get_cfname(&self) -> &str {
-        &self.cfname
+    pub fn get_cf_name(&self) -> &str {
+        &self.cf_name
     }
 
-    fn get_cfname_for_reflect(&self) -> &::std::string::String {
-        &self.cfname
+    fn get_cf_name_for_reflect(&self) -> &::std::string::String {
+        &self.cf_name
     }
 
-    fn mut_cfname_for_reflect(&mut self) -> &mut ::std::string::String {
-        &mut self.cfname
+    fn mut_cf_name_for_reflect(&mut self) -> &mut ::std::string::String {
+        &mut self.cf_name
     }
 
     // uint64 region_id = 3;
@@ -479,7 +479,7 @@ impl ::protobuf::Message for SSTHandle {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.uuid)?;
                 },
                 2 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cfname)?;
+                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.cf_name)?;
                 },
                 3 => {
                     if wire_type != ::protobuf::wire_format::WireTypeVarint {
@@ -506,8 +506,8 @@ impl ::protobuf::Message for SSTHandle {
         if !self.uuid.is_empty() {
             my_size += ::protobuf::rt::bytes_size(1, &self.uuid);
         }
-        if !self.cfname.is_empty() {
-            my_size += ::protobuf::rt::string_size(2, &self.cfname);
+        if !self.cf_name.is_empty() {
+            my_size += ::protobuf::rt::string_size(2, &self.cf_name);
         }
         if self.region_id != 0 {
             my_size += ::protobuf::rt::value_size(3, self.region_id, ::protobuf::wire_format::WireTypeVarint);
@@ -525,8 +525,8 @@ impl ::protobuf::Message for SSTHandle {
         if !self.uuid.is_empty() {
             os.write_bytes(1, &self.uuid)?;
         }
-        if !self.cfname.is_empty() {
-            os.write_string(2, &self.cfname)?;
+        if !self.cf_name.is_empty() {
+            os.write_string(2, &self.cf_name)?;
         }
         if self.region_id != 0 {
             os.write_uint64(3, self.region_id)?;
@@ -586,9 +586,9 @@ impl ::protobuf::MessageStatic for SSTHandle {
                     SSTHandle::mut_uuid_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeString>(
-                    "cfname",
-                    SSTHandle::get_cfname_for_reflect,
-                    SSTHandle::mut_cfname_for_reflect,
+                    "cf_name",
+                    SSTHandle::get_cf_name_for_reflect,
+                    SSTHandle::mut_cf_name_for_reflect,
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeUint64>(
                     "region_id",
@@ -613,7 +613,7 @@ impl ::protobuf::MessageStatic for SSTHandle {
 impl ::protobuf::Clear for SSTHandle {
     fn clear(&mut self) {
         self.clear_uuid();
-        self.clear_cfname();
+        self.clear_cf_name();
         self.clear_region_id();
         self.clear_region_epoch();
         self.unknown_fields.clear();
@@ -1002,16 +1002,16 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \n\x0eimportpb.proto\x12\x08importpb\x1a\x0cmetapb.proto\x1a\x14gogoprot\
     o/gogo.proto\"^\n\x07SSTMeta\x12\x10\n\x03len\x18\x01\x20\x01(\x04R\x03l\
     en\x12\x14\n\x05crc32\x18\x02\x20\x01(\rR\x05crc32\x12+\n\x06handle\x18\
-    \x03\x20\x01(\x0b2\x13.importpb.SSTHandleR\x06handle\"\x8c\x01\n\tSSTHan\
-    dle\x12\x12\n\x04uuid\x18\x01\x20\x01(\x0cR\x04uuid\x12\x16\n\x06cfname\
-    \x18\x02\x20\x01(\tR\x06cfname\x12\x1b\n\tregion_id\x18\x03\x20\x01(\x04\
+    \x03\x20\x01(\x0b2\x13.importpb.SSTHandleR\x06handle\"\x8d\x01\n\tSSTHan\
+    dle\x12\x12\n\x04uuid\x18\x01\x20\x01(\x0cR\x04uuid\x12\x17\n\x07cf_name\
+    \x18\x02\x20\x01(\tR\x06cfName\x12\x1b\n\tregion_id\x18\x03\x20\x01(\x04\
     R\x08regionId\x126\n\x0cregion_epoch\x18\x04\x20\x01(\x0b2\x13.metapb.Re\
     gionEpochR\x0bregionEpoch\"M\n\x10UploadSSTRequest\x12%\n\x04meta\x18\
     \x01\x20\x01(\x0b2\x11.importpb.SSTMetaR\x04meta\x12\x12\n\x04data\x18\
     \x02\x20\x01(\x0cR\x04data\"\x13\n\x11UploadSSTResponse2R\n\x06Import\
     \x12H\n\tUploadSST\x12\x1a.importpb.UploadSSTRequest\x1a\x1b.importpb.Up\
-    loadSSTResponse\"\0(\x01B&\n\x18com.pingcap.tikv.kvproto\xe0\xe2\x1e\x01\
-    \xc8\xe2\x1e\x01\xd0\xe2\x1e\x01J\xeb\x0b\n\x06\x12\x04\0\0+\x01\n\x08\n\
+    loadSSTResponse\"\0(\x01B&\n\x18com.pingcap.tikv.kvproto\xd0\xe2\x1e\x01\
+    \xc8\xe2\x1e\x01\xe0\xe2\x1e\x01J\xeb\x0b\n\x06\x12\x04\0\0+\x01\n\x08\n\
     \x01\x0c\x12\x03\0\0\x12\n\x08\n\x01\x02\x12\x03\x02\x08\x10\n\t\n\x02\
     \x03\0\x12\x03\x04\x07\x15\n\t\n\x02\x03\x01\x12\x03\x05\x07\x1d\n\x08\n\
     \x01\x08\x12\x03\x07\0$\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x07\0$\n\x0c\n\
@@ -1053,14 +1053,14 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ith\x20the\x20same\x20data.\n\n\r\n\x05\x04\x01\x02\0\x04\x12\x04\x1c\
     \x04\x1a\x13\n\x0c\n\x05\x04\x01\x02\0\x05\x12\x03\x1c\x04\t\n\x0c\n\x05\
     \x04\x01\x02\0\x01\x12\x03\x1c\n\x0e\n\x0c\n\x05\x04\x01\x02\0\x03\x12\
-    \x03\x1c\x11\x12\n9\n\x04\x04\x01\x02\x01\x12\x03\x1e\x04\x16\x1a,\x20Th\
+    \x03\x1c\x11\x12\n9\n\x04\x04\x01\x02\x01\x12\x03\x1e\x04\x17\x1a,\x20Th\
     e\x20CF\x20that\x20this\x20file\x20will\x20be\x20ingested\x20to.\n\n\r\n\
     \x05\x04\x01\x02\x01\x04\x12\x04\x1e\x04\x1c\x13\n\x0c\n\x05\x04\x01\x02\
     \x01\x05\x12\x03\x1e\x04\n\n\x0c\n\x05\x04\x01\x02\x01\x01\x12\x03\x1e\
-    \x0b\x11\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x1e\x14\x15\n=\n\x04\
+    \x0b\x12\n\x0c\n\x05\x04\x01\x02\x01\x03\x12\x03\x1e\x15\x16\n=\n\x04\
     \x04\x01\x02\x02\x12\x03\x20\x04\x19\x1a0\x20The\x20region\x20that\x20th\
     is\x20file\x20will\x20be\x20ingested\x20to.\n\n\r\n\x05\x04\x01\x02\x02\
-    \x04\x12\x04\x20\x04\x1e\x16\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03\x20\
+    \x04\x12\x04\x20\x04\x1e\x17\n\x0c\n\x05\x04\x01\x02\x02\x05\x12\x03\x20\
     \x04\n\n\x0c\n\x05\x04\x01\x02\x02\x01\x12\x03\x20\x0b\x14\n\x0c\n\x05\
     \x04\x01\x02\x02\x03\x12\x03\x20\x17\x18\nB\n\x04\x04\x01\x02\x03\x12\
     \x03\"\x04(\x1a5\x20The\x20epoch\x20of\x20the\x20region\x20when\x20this\
