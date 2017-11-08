@@ -14,8 +14,39 @@ option (gogoproto.unmarshaler_all) = true;
 option java_package = "com.pingcap.tikv.kvproto";
 
 service Import {
+    rpc Write(stream WriteRequest) returns (WriteResponse) {}
+    rpc Flush(FlushRequest) returns (FlushResponse) {}
+
     rpc IngestSST(IngestSSTRequest) returns (IngestSSTResponse) {}
     rpc UploadSST(stream UploadSSTRequest) returns (UploadSSTResponse) {}
+}
+
+message Mutation {
+  enum OP {
+    Put = 0;
+  }
+  OP op = 1;
+  bytes key = 2;
+  bytes value = 3;
+}
+
+message WriteRequest {
+  message Meta {
+    bytes uuid = 1;
+    uint64 commit_ts = 2;
+  }
+  Meta meta = 1;
+  repeated Mutation mutations = 2;
+}
+
+message WriteResponse {
+}
+
+message FlushRequest {
+  bytes uuid = 1;
+}
+
+message FlushResponse {
 }
 
 message SSTMeta {
