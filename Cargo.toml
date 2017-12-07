@@ -10,3 +10,6 @@ name = "kvproto"
 protobuf = "1.*"
 futures = "0.1"
 grpcio = "0.1"
+
+[replace."grpcio:0.1.2"]
+path = "/home/qupeng/github.com/overvenus/grpc-rs"
