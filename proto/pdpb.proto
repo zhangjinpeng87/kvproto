@@ -240,10 +240,8 @@ message RegionHeartbeatRequest {
     uint64 keys_read = 9;
     // Approximate region size.
     uint64 approximate_size = 10;
-    // Learners are the non-voter peers.
-    repeated metapb.Peer learners = 11;
-    // Pending Learners are the non-voter peers that are catching up with leader's log.
-    repeated metapb.Peer pending_learners = 12;
+    // Pending Learners are the learner peers that are catching up with leader's log.
+    repeated metapb.Peer pending_learners = 11;
 }
 
 message ChangePeer {

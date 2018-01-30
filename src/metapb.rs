@@ -998,6 +998,7 @@ pub struct Region {
     pub end_key: ::std::vec::Vec<u8>,
     pub region_epoch: ::protobuf::SingularPtrField<RegionEpoch>,
     pub peers: ::protobuf::RepeatedField<Peer>,
+    pub learners: ::protobuf::RepeatedField<Peer>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -1185,6 +1186,39 @@ impl Region {
     fn mut_peers_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Peer> {
         &mut self.peers
     }
+
+    // repeated .metapb.Peer learners = 6;
+
+    pub fn clear_learners(&mut self) {
+        self.learners.clear();
+    }
+
+    // Param is passed by value, moved
+    pub fn set_learners(&mut self, v: ::protobuf::RepeatedField<Peer>) {
+        self.learners = v;
+    }
+
+    // Mutable pointer to the field.
+    pub fn mut_learners(&mut self) -> &mut ::protobuf::RepeatedField<Peer> {
+        &mut self.learners
+    }
+
+    // Take field
+    pub fn take_learners(&mut self) -> ::protobuf::RepeatedField<Peer> {
+        ::std::mem::replace(&mut self.learners, ::protobuf::RepeatedField::new())
+    }
+
+    pub fn get_learners(&self) -> &[Peer] {
+        &self.learners
+    }
+
+    fn get_learners_for_reflect(&self) -> &::protobuf::RepeatedField<Peer> {
+        &self.learners
+    }
+
+    fn mut_learners_for_reflect(&mut self) -> &mut ::protobuf::RepeatedField<Peer> {
+        &mut self.learners
+    }
 }
 
 impl ::protobuf::Message for Region {
@@ -1195,6 +1229,11 @@ impl ::protobuf::Message for Region {
             }
         };
         for v in &self.peers {
+            if !v.is_initialized() {
+                return false;
+            }
+        };
+        for v in &self.learners {
             if !v.is_initialized() {
                 return false;
             }
@@ -1225,6 +1264,9 @@ impl ::protobuf::Message for Region {
                 5 => {
                     ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.peers)?;
                 },
+                6 => {
+                    ::protobuf::rt::read_repeated_message_into(wire_type, is, &mut self.learners)?;
+                },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
                 },
@@ -1254,6 +1296,10 @@ impl ::protobuf::Message for Region {
             let len = value.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         };
+        for value in &self.learners {
+            let len = value.compute_size();
+            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -1276,6 +1322,11 @@ impl ::protobuf::Message for Region {
         }
         for v in &self.peers {
             os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
+            os.write_raw_varint32(v.get_cached_size())?;
+            v.write_to_with_cached_sizes(os)?;
+        };
+        for v in &self.learners {
+            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         };
@@ -1348,6 +1399,11 @@ impl ::protobuf::MessageStatic for Region {
                     Region::get_peers_for_reflect,
                     Region::mut_peers_for_reflect,
                 ));
+                fields.push(::protobuf::reflect::accessor::make_repeated_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Peer>>(
+                    "learners",
+                    Region::get_learners_for_reflect,
+                    Region::mut_learners_for_reflect,
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<Region>(
                     "Region",
                     fields,
@@ -1365,6 +1421,7 @@ impl ::protobuf::Clear for Region {
         self.clear_end_key();
         self.clear_region_epoch();
         self.clear_peers();
+        self.clear_learners();
         self.unknown_fields.clear();
     }
 }
@@ -1661,16 +1718,17 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x20\x01(\x0e2\x12.metapb.StoreStateR\x05state\x12*\n\x06labels\x18\x04\
     \x20\x03(\x0b2\x12.metapb.StoreLabelR\x06labels\"B\n\x0bRegionEpoch\x12\
     \x19\n\x08conf_ver\x18\x01\x20\x01(\x04R\x07confVer\x12\x18\n\x07version\
-    \x18\x02\x20\x01(\x04R\x07version\"\xaa\x01\n\x06Region\x12\x0e\n\x02id\
+    \x18\x02\x20\x01(\x04R\x07version\"\xd4\x01\n\x06Region\x12\x0e\n\x02id\
     \x18\x01\x20\x01(\x04R\x02id\x12\x1b\n\tstart_key\x18\x02\x20\x01(\x0cR\
     \x08startKey\x12\x17\n\x07end_key\x18\x03\x20\x01(\x0cR\x06endKey\x126\n\
     \x0cregion_epoch\x18\x04\x20\x01(\x0b2\x13.metapb.RegionEpochR\x0bregion\
-    Epoch\x12\"\n\x05peers\x18\x05\x20\x03(\x0b2\x0c.metapb.PeerR\x05peers\"\
+    Epoch\x12\"\n\x05peers\x18\x05\x20\x03(\x0b2\x0c.metapb.PeerR\x05peers\
+    \x12(\n\x08learners\x18\x06\x20\x03(\x0b2\x0c.metapb.PeerR\x08learners\"\
     1\n\x04Peer\x12\x0e\n\x02id\x18\x01\x20\x01(\x04R\x02id\x12\x19\n\x08sto\
     re_id\x18\x02\x20\x01(\x04R\x07storeId*0\n\nStoreState\x12\x06\n\x02Up\
     \x10\0\x12\x0b\n\x07Offline\x10\x01\x12\r\n\tTombstone\x10\x02B&\n\x18co\
     m.pingcap.tikv.kvproto\xc8\xe2\x1e\x01\xe0\xe2\x1e\x01\xd0\xe2\x1e\x01J\
-    \x9d\x11\n\x06\x12\x04\0\0:\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\
+    \xe2\x11\n\x06\x12\x04\0\0;\x01\n\x08\n\x01\x0c\x12\x03\0\0\x12\n\x08\n\
     \x01\x02\x12\x03\x01\x08\x0e\n\t\n\x02\x03\0\x12\x03\x03\x07\x1d\n\x08\n\
     \x01\x08\x12\x03\x05\0(\n\x0b\n\x04\x08\xe7\x07\0\x12\x03\x05\0(\n\x0c\n\
     \x05\x08\xe7\x07\0\x02\x12\x03\x05\x07\x20\n\r\n\x06\x08\xe7\x07\0\x02\0\
@@ -1739,7 +1797,7 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     ,\x20auto\x20increment\x20when\x20split\x20or\x20merge\n\n\r\n\x05\x04\
     \x03\x02\x01\x04\x12\x04+\x04)\x18\n\x0c\n\x05\x04\x03\x02\x01\x05\x12\
     \x03+\x04\n\n\x0c\n\x05\x04\x03\x02\x01\x01\x12\x03+\x0b\x12\n\x0c\n\x05\
-    \x04\x03\x02\x01\x03\x12\x03+\x15\x16\n\n\n\x02\x04\x04\x12\x04.\05\x01\
+    \x04\x03\x02\x01\x03\x12\x03+\x15\x16\n\n\n\x02\x04\x04\x12\x04.\06\x01\
     \n\n\n\x03\x04\x04\x01\x12\x03.\x08\x0e\n\x0b\n\x04\x04\x04\x02\0\x12\
     \x03/\x04\x12\n\r\n\x05\x04\x04\x02\0\x04\x12\x04/\x04.\x10\n\x0c\n\x05\
     \x04\x04\x02\0\x05\x12\x03/\x04\n\n\x0c\n\x05\x04\x04\x02\0\x01\x12\x03/\
@@ -1758,14 +1816,18 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x12\x034\x04\x1c\n\x0c\n\x05\x04\x04\x02\x04\x04\x12\x034\x04\x0c\n\x0c\
     \n\x05\x04\x04\x02\x04\x06\x12\x034\r\x11\n\x0c\n\x05\x04\x04\x02\x04\
     \x01\x12\x034\x12\x17\n\x0c\n\x05\x04\x04\x02\x04\x03\x12\x034\x1a\x1b\n\
-    \n\n\x02\x04\x05\x12\x047\0:\x01\n\n\n\x03\x04\x05\x01\x12\x037\x08\x0c\
-    \n\x0b\n\x04\x04\x05\x02\0\x12\x038\x04\x12\n\r\n\x05\x04\x05\x02\0\x04\
-    \x12\x048\x047\x0e\n\x0c\n\x05\x04\x05\x02\0\x05\x12\x038\x04\n\n\x0c\n\
-    \x05\x04\x05\x02\0\x01\x12\x038\x0b\r\n\x0c\n\x05\x04\x05\x02\0\x03\x12\
-    \x038\x10\x11\n\x0b\n\x04\x04\x05\x02\x01\x12\x039\x04\x18\n\r\n\x05\x04\
-    \x05\x02\x01\x04\x12\x049\x048\x12\n\x0c\n\x05\x04\x05\x02\x01\x05\x12\
-    \x039\x04\n\n\x0c\n\x05\x04\x05\x02\x01\x01\x12\x039\x0b\x13\n\x0c\n\x05\
-    \x04\x05\x02\x01\x03\x12\x039\x16\x17b\x06proto3\
+    \x0b\n\x04\x04\x04\x02\x05\x12\x035\x04\x1f\n\x0c\n\x05\x04\x04\x02\x05\
+    \x04\x12\x035\x04\x0c\n\x0c\n\x05\x04\x04\x02\x05\x06\x12\x035\r\x11\n\
+    \x0c\n\x05\x04\x04\x02\x05\x01\x12\x035\x12\x1a\n\x0c\n\x05\x04\x04\x02\
+    \x05\x03\x12\x035\x1d\x1e\n\n\n\x02\x04\x05\x12\x048\0;\x01\n\n\n\x03\
+    \x04\x05\x01\x12\x038\x08\x0c\n\x0b\n\x04\x04\x05\x02\0\x12\x039\x04\x12\
+    \n\r\n\x05\x04\x05\x02\0\x04\x12\x049\x048\x0e\n\x0c\n\x05\x04\x05\x02\0\
+    \x05\x12\x039\x04\n\n\x0c\n\x05\x04\x05\x02\0\x01\x12\x039\x0b\r\n\x0c\n\
+    \x05\x04\x05\x02\0\x03\x12\x039\x10\x11\n\x0b\n\x04\x04\x05\x02\x01\x12\
+    \x03:\x04\x18\n\r\n\x05\x04\x05\x02\x01\x04\x12\x04:\x049\x12\n\x0c\n\
+    \x05\x04\x05\x02\x01\x05\x12\x03:\x04\n\n\x0c\n\x05\x04\x05\x02\x01\x01\
+    \x12\x03:\x0b\x13\n\x0c\n\x05\x04\x05\x02\x01\x03\x12\x03:\x16\x17b\x06p\
+    roto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
