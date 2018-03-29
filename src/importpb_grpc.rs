@@ -43,27 +43,27 @@ impl ImportSstClient {
         }
     }
 
-    pub fn upload_opt(&self, opt: ::grpcio::CallOption) -> (::grpcio::ClientCStreamSender<super::importpb::UploadRequest>, ::grpcio::ClientCStreamReceiver<super::importpb::UploadResponse>) {
+    pub fn upload_opt(&self, opt: ::grpcio::CallOption) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::importpb::UploadRequest>, ::grpcio::ClientCStreamReceiver<super::importpb::UploadResponse>)> {
         self.client.client_streaming(&METHOD_IMPORT_SST_UPLOAD, opt)
     }
 
-    pub fn upload(&self) -> (::grpcio::ClientCStreamSender<super::importpb::UploadRequest>, ::grpcio::ClientCStreamReceiver<super::importpb::UploadResponse>) {
+    pub fn upload(&self) -> ::grpcio::Result<(::grpcio::ClientCStreamSender<super::importpb::UploadRequest>, ::grpcio::ClientCStreamReceiver<super::importpb::UploadResponse>)> {
         self.upload_opt(::grpcio::CallOption::default())
     }
 
-    pub fn ingest_opt(&self, req: super::importpb::IngestRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::importpb::IngestResponse> {
+    pub fn ingest_opt(&self, req: &super::importpb::IngestRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::importpb::IngestResponse> {
         self.client.unary_call(&METHOD_IMPORT_SST_INGEST, req, opt)
     }
 
-    pub fn ingest(&self, req: super::importpb::IngestRequest) -> ::grpcio::Result<super::importpb::IngestResponse> {
+    pub fn ingest(&self, req: &super::importpb::IngestRequest) -> ::grpcio::Result<super::importpb::IngestResponse> {
         self.ingest_opt(req, ::grpcio::CallOption::default())
     }
 
-    pub fn ingest_async_opt(&self, req: super::importpb::IngestRequest, opt: ::grpcio::CallOption) -> ::grpcio::ClientUnaryReceiver<super::importpb::IngestResponse> {
+    pub fn ingest_async_opt(&self, req: &super::importpb::IngestRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::importpb::IngestResponse>> {
         self.client.unary_call_async(&METHOD_IMPORT_SST_INGEST, req, opt)
     }
 
-    pub fn ingest_async(&self, req: super::importpb::IngestRequest) -> ::grpcio::ClientUnaryReceiver<super::importpb::IngestResponse> {
+    pub fn ingest_async(&self, req: &super::importpb::IngestRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::importpb::IngestResponse>> {
         self.ingest_async_opt(req, ::grpcio::CallOption::default())
     }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
