@@ -41,7 +41,6 @@ message DeleteRangeRequest {
 message DeleteRangeResponse {}
 
 message UnsafeCleanupRangeRequest {
-    string cf = 1;
     bytes start_key = 2;
     bytes end_key = 3;
 }
