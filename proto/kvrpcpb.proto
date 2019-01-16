@@ -18,11 +18,16 @@ message LockInfo {
     uint64 lock_ttl = 4;
 }
 
+message AlreadyExist {
+    bytes key = 1;
+}
+
 message KeyError {
     LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
+    AlreadyExist alreadyexist = 5; // Key already exists
 }
 
 message WriteConflict {
@@ -135,6 +140,8 @@ message PrewriteRequest {
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
     bool skip_constraint_check = 6;
+    // only success when all keys not exist
+    bool write_not_exist = 7;
 }
 
 message PrewriteResponse {
