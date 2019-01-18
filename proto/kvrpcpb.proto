@@ -131,7 +131,7 @@ message Mutation {
     bytes key = 2;
     bytes value = 3;
     // Write only when the key is not exist
-    bool write_not_exist = 4;
+    bool should_not_exist = 4;
 }
 
 message PrewriteRequest {
@@ -142,8 +142,6 @@ message PrewriteRequest {
     uint64 start_version = 4;
     uint64 lock_ttl = 5;
     bool skip_constraint_check = 6;
-    // only success when all keys not exist
-    bool write_not_exist = 7;
 }
 
 message PrewriteResponse {
