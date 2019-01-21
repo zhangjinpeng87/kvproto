@@ -27,7 +27,7 @@ message KeyError {
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
-    AlreadyExist alreadyexist = 5; // Key already exists
+    AlreadyExist already_exist = 5; // Key already exists
 }
 
 message WriteConflict {
