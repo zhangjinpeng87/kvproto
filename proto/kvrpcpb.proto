@@ -126,7 +126,7 @@ enum Op {
     Rollback = 3;
 }
 
-message PreCondition {
+message Precondition {
     // Should not exist
     bool should_not_exist = 1;
     // Value must equal to
@@ -138,7 +138,7 @@ message Mutation {
     bytes key = 2;
     bytes value = 3;
     // Write only when the precondition satisfied
-    PreCondition precondition = 4;
+    Precondition precondition = 4;
 }
 
 message PrewriteRequest {

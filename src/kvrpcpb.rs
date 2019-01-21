@@ -3950,7 +3950,7 @@ impl ::protobuf::reflect::ProtobufValue for ScanResponse {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct PreCondition {
+pub struct Precondition {
     // message fields
     pub should_not_exist: bool,
     pub equal_to: ::std::vec::Vec<u8>,
@@ -3959,8 +3959,8 @@ pub struct PreCondition {
     cached_size: ::protobuf::CachedSize,
 }
 
-impl PreCondition {
-    pub fn new() -> PreCondition {
+impl Precondition {
+    pub fn new() -> Precondition {
         ::std::default::Default::default()
     }
 
@@ -4006,7 +4006,7 @@ impl PreCondition {
     }
 }
 
-impl ::protobuf::Message for PreCondition {
+impl ::protobuf::Message for Precondition {
     fn is_initialized(&self) -> bool {
         true
     }
@@ -4085,8 +4085,8 @@ impl ::protobuf::Message for PreCondition {
         Self::descriptor_static()
     }
 
-    fn new() -> PreCondition {
-        PreCondition::new()
+    fn new() -> Precondition {
+        Precondition::new()
     }
 
     fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
@@ -4099,16 +4099,16 @@ impl ::protobuf::Message for PreCondition {
                 let mut fields = ::std::vec::Vec::new();
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBool>(
                     "should_not_exist",
-                    |m: &PreCondition| { &m.should_not_exist },
-                    |m: &mut PreCondition| { &mut m.should_not_exist },
+                    |m: &Precondition| { &m.should_not_exist },
+                    |m: &mut Precondition| { &mut m.should_not_exist },
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
                     "equal_to",
-                    |m: &PreCondition| { &m.equal_to },
-                    |m: &mut PreCondition| { &mut m.equal_to },
+                    |m: &Precondition| { &m.equal_to },
+                    |m: &mut Precondition| { &mut m.equal_to },
                 ));
-                ::protobuf::reflect::MessageDescriptor::new::<PreCondition>(
-                    "PreCondition",
+                ::protobuf::reflect::MessageDescriptor::new::<Precondition>(
+                    "Precondition",
                     fields,
                     file_descriptor_proto()
                 )
@@ -4116,18 +4116,18 @@ impl ::protobuf::Message for PreCondition {
         }
     }
 
-    fn default_instance() -> &'static PreCondition {
-        static mut instance: ::protobuf::lazy::Lazy<PreCondition> = ::protobuf::lazy::Lazy {
+    fn default_instance() -> &'static Precondition {
+        static mut instance: ::protobuf::lazy::Lazy<Precondition> = ::protobuf::lazy::Lazy {
             lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const PreCondition,
+            ptr: 0 as *const Precondition,
         };
         unsafe {
-            instance.get(PreCondition::new)
+            instance.get(Precondition::new)
         }
     }
 }
 
-impl ::protobuf::Clear for PreCondition {
+impl ::protobuf::Clear for Precondition {
     fn clear(&mut self) {
         self.clear_should_not_exist();
         self.clear_equal_to();
@@ -4135,13 +4135,13 @@ impl ::protobuf::Clear for PreCondition {
     }
 }
 
-impl ::std::fmt::Debug for PreCondition {
+impl ::std::fmt::Debug for Precondition {
     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         ::protobuf::text_format::fmt(self, f)
     }
 }
 
-impl ::protobuf::reflect::ProtobufValue for PreCondition {
+impl ::protobuf::reflect::ProtobufValue for Precondition {
     fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
         ::protobuf::reflect::ProtobufValueRef::Message(self)
     }
@@ -4153,7 +4153,7 @@ pub struct Mutation {
     pub op: Op,
     pub key: ::std::vec::Vec<u8>,
     pub value: ::std::vec::Vec<u8>,
-    pub precondition: ::protobuf::SingularPtrField<PreCondition>,
+    pub precondition: ::protobuf::SingularPtrField<Precondition>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4231,7 +4231,7 @@ impl Mutation {
         &self.value
     }
 
-    // .kvrpcpb.PreCondition precondition = 4;
+    // .kvrpcpb.Precondition precondition = 4;
 
     pub fn clear_precondition(&mut self) {
         self.precondition.clear();
@@ -4242,13 +4242,13 @@ impl Mutation {
     }
 
     // Param is passed by value, moved
-    pub fn set_precondition(&mut self, v: PreCondition) {
+    pub fn set_precondition(&mut self, v: Precondition) {
         self.precondition = ::protobuf::SingularPtrField::some(v);
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_precondition(&mut self) -> &mut PreCondition {
+    pub fn mut_precondition(&mut self) -> &mut Precondition {
         if self.precondition.is_none() {
             self.precondition.set_default();
         }
@@ -4256,12 +4256,12 @@ impl Mutation {
     }
 
     // Take field
-    pub fn take_precondition(&mut self) -> PreCondition {
-        self.precondition.take().unwrap_or_else(|| PreCondition::new())
+    pub fn take_precondition(&mut self) -> Precondition {
+        self.precondition.take().unwrap_or_else(|| Precondition::new())
     }
 
-    pub fn get_precondition(&self) -> &PreCondition {
-        self.precondition.as_ref().unwrap_or_else(|| PreCondition::default_instance())
+    pub fn get_precondition(&self) -> &Precondition {
+        self.precondition.as_ref().unwrap_or_else(|| Precondition::default_instance())
     }
 }
 
@@ -4393,7 +4393,7 @@ impl ::protobuf::Message for Mutation {
                     |m: &Mutation| { &m.value },
                     |m: &mut Mutation| { &mut m.value },
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<PreCondition>>(
+                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<Precondition>>(
                     "precondition",
                     |m: &Mutation| { &m.precondition },
                     |m: &mut Mutation| { &mut m.precondition },
@@ -17922,13 +17922,13 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05error\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05val\
     ue\x18\x03\x20\x01(\x0cR\x05value\"h\n\x0cScanResponse\x121\n\x0cregion_\
     error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12%\n\x05\
-    pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"S\n\x0cPreCond\
+    pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"S\n\x0cPrecond\
     ition\x12(\n\x10should_not_exist\x18\x01\x20\x01(\x08R\x0eshouldNotExist\
     \x12\x19\n\x08equal_to\x18\x02\x20\x01(\x0cR\x07equalTo\"\x8a\x01\n\x08M\
     utation\x12\x1b\n\x02op\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x02op\x12\
     \x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\
     \x20\x01(\x0cR\x05value\x129\n\x0cprecondition\x18\x04\x20\x01(\x0b2\x15\
-    .kvrpcpb.PreConditionR\x0cprecondition\"\x85\x02\n\x0fPrewriteRequest\
+    .kvrpcpb.PreconditionR\x0cprecondition\"\x85\x02\n\x0fPrewriteRequest\
     \x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\
     \x12/\n\tmutations\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutation\
     s\x12!\n\x0cprimary_lock\x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rst\
