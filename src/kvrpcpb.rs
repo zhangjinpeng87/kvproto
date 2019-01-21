@@ -464,7 +464,7 @@ pub struct NotEqualTo {
     // message fields
     pub key: ::std::vec::Vec<u8>,
     pub value: ::std::vec::Vec<u8>,
-    pub should_equal_to: ::std::vec::Vec<u8>,
+    pub expected_value: ::std::vec::Vec<u8>,
     // special fields
     pub unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -527,30 +527,30 @@ impl NotEqualTo {
         &self.value
     }
 
-    // bytes should_equal_to = 3;
+    // bytes expected_value = 3;
 
-    pub fn clear_should_equal_to(&mut self) {
-        self.should_equal_to.clear();
+    pub fn clear_expected_value(&mut self) {
+        self.expected_value.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_should_equal_to(&mut self, v: ::std::vec::Vec<u8>) {
-        self.should_equal_to = v;
+    pub fn set_expected_value(&mut self, v: ::std::vec::Vec<u8>) {
+        self.expected_value = v;
     }
 
     // Mutable pointer to the field.
     // If field is not initialized, it is initialized with default value first.
-    pub fn mut_should_equal_to(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.should_equal_to
+    pub fn mut_expected_value(&mut self) -> &mut ::std::vec::Vec<u8> {
+        &mut self.expected_value
     }
 
     // Take field
-    pub fn take_should_equal_to(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.should_equal_to, ::std::vec::Vec::new())
+    pub fn take_expected_value(&mut self) -> ::std::vec::Vec<u8> {
+        ::std::mem::replace(&mut self.expected_value, ::std::vec::Vec::new())
     }
 
-    pub fn get_should_equal_to(&self) -> &[u8] {
-        &self.should_equal_to
+    pub fn get_expected_value(&self) -> &[u8] {
+        &self.expected_value
     }
 }
 
@@ -570,7 +570,7 @@ impl ::protobuf::Message for NotEqualTo {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.value)?;
                 },
                 3 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.should_equal_to)?;
+                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.expected_value)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -590,8 +590,8 @@ impl ::protobuf::Message for NotEqualTo {
         if !self.value.is_empty() {
             my_size += ::protobuf::rt::bytes_size(2, &self.value);
         }
-        if !self.should_equal_to.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(3, &self.should_equal_to);
+        if !self.expected_value.is_empty() {
+            my_size += ::protobuf::rt::bytes_size(3, &self.expected_value);
         }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
@@ -605,8 +605,8 @@ impl ::protobuf::Message for NotEqualTo {
         if !self.value.is_empty() {
             os.write_bytes(2, &self.value)?;
         }
-        if !self.should_equal_to.is_empty() {
-            os.write_bytes(3, &self.should_equal_to)?;
+        if !self.expected_value.is_empty() {
+            os.write_bytes(3, &self.expected_value)?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -661,9 +661,9 @@ impl ::protobuf::Message for NotEqualTo {
                     |m: &mut NotEqualTo| { &mut m.value },
                 ));
                 fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "should_equal_to",
-                    |m: &NotEqualTo| { &m.should_equal_to },
-                    |m: &mut NotEqualTo| { &mut m.should_equal_to },
+                    "expected_value",
+                    |m: &NotEqualTo| { &m.expected_value },
+                    |m: &mut NotEqualTo| { &mut m.expected_value },
                 ));
                 ::protobuf::reflect::MessageDescriptor::new::<NotEqualTo>(
                     "NotEqualTo",
@@ -689,7 +689,7 @@ impl ::protobuf::Clear for NotEqualTo {
     fn clear(&mut self) {
         self.clear_key();
         self.clear_value();
-        self.clear_should_equal_to();
+        self.clear_expected_value();
         self.unknown_fields.clear();
     }
 }
@@ -18182,11 +18182,11 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x01\x20\x01(\x0cR\x0bprimaryLock\x12!\n\x0clock_version\x18\x02\x20\x01\
     (\x04R\x0blockVersion\x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12\
     \x19\n\x08lock_ttl\x18\x04\x20\x01(\x04R\x07lockTtl\"\x20\n\x0cAlreadyEx\
-    ist\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"\\\n\nNotEqualTo\x12\
+    ist\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"[\n\nNotEqualTo\x12\
     \x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x02\
-    \x20\x01(\x0cR\x05value\x12&\n\x0fshould_equal_to\x18\x03\x20\x01(\x0cR\
-    \rshouldEqualTo\"\x90\x02\n\x08KeyError\x12)\n\x06locked\x18\x01\x20\x01\
-    (\x0b2\x11.kvrpcpb.LockInfoR\x06locked\x12\x1c\n\tretryable\x18\x02\x20\
+    \x20\x01(\x0cR\x05value\x12%\n\x0eexpected_value\x18\x03\x20\x01(\x0cR\r\
+    expectedValue\"\x90\x02\n\x08KeyError\x12)\n\x06locked\x18\x01\x20\x01(\
+    \x0b2\x11.kvrpcpb.LockInfoR\x06locked\x12\x1c\n\tretryable\x18\x02\x20\
     \x01(\tR\tretryable\x12\x14\n\x05abort\x18\x03\x20\x01(\tR\x05abort\x122\
     \n\x08conflict\x18\x04\x20\x01(\x0b2\x16.kvrpcpb.WriteConflictR\x08confl\
     ict\x12:\n\ralready_exist\x18\x05\x20\x01(\x0b2\x15.kvrpcpb.AlreadyExist\
@@ -18437,10 +18437,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x04\x12\x04\x1a\x04\x19\x12\n\x0c\n\x05\x04\x02\x02\x01\x05\x12\x03\x1a\
     \x04\t\n\x0c\n\x05\x04\x02\x02\x01\x01\x12\x03\x1a\n\x0f\n\x0c\n\x05\x04\
     \x02\x02\x01\x03\x12\x03\x1a\x12\x13\n\x0b\n\x04\x04\x02\x02\x02\x12\x03\
-    \x1b\x04\x1e\n\r\n\x05\x04\x02\x02\x02\x04\x12\x04\x1b\x04\x1a\x14\n\x0c\
+    \x1b\x04\x1d\n\r\n\x05\x04\x02\x02\x02\x04\x12\x04\x1b\x04\x1a\x14\n\x0c\
     \n\x05\x04\x02\x02\x02\x05\x12\x03\x1b\x04\t\n\x0c\n\x05\x04\x02\x02\x02\
-    \x01\x12\x03\x1b\n\x19\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03\x1b\x1c\
-    \x1d\n\n\n\x02\x04\x03\x12\x04\x1e\0%\x01\n\n\n\x03\x04\x03\x01\x12\x03\
+    \x01\x12\x03\x1b\n\x18\n\x0c\n\x05\x04\x02\x02\x02\x03\x12\x03\x1b\x1b\
+    \x1c\n\n\n\x02\x04\x03\x12\x04\x1e\0%\x01\n\n\n\x03\x04\x03\x01\x12\x03\
     \x1e\x08\x10\nD\n\x04\x04\x03\x02\0\x12\x03\x1f\x04\x18\"7\x20Client\x20\
     should\x20backoff\x20or\x20cleanup\x20the\x20lock\x20then\x20retry.\n\n\
     \r\n\x05\x04\x03\x02\0\x04\x12\x04\x1f\x04\x1e\x12\n\x0c\n\x05\x04\x03\

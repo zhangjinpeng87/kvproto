@@ -25,7 +25,7 @@ message AlreadyExist {
 message NotEqualTo {
     bytes key = 1;
     bytes value = 2;
-    bytes should_equal_to = 3;
+    bytes expected_value = 3;
 }
 
 message KeyError {
