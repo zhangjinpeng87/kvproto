@@ -126,12 +126,19 @@ enum Op {
     Rollback = 3;
 }
 
+message PreCondition {
+    // Should not exist
+    bool should_not_exist = 1;
+    // Value must equal to
+    bytes equal_to = 2;
+}
+
 message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
-    // Write only when the key is not exist
-    bool should_not_exist = 4;
+    // Write only when the precondition satisfied
+    PreCondition precondition = 4;
 }
 
 message PrewriteRequest {
