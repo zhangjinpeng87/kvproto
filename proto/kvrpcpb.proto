@@ -22,12 +22,19 @@ message AlreadyExist {
     bytes key = 1;
 }
 
+message NotEqualTo {
+    bytes key = 1;
+    bytes value = 2;
+    bytes should_equal_to = 3;
+}
+
 message KeyError {
     LockInfo locked = 1; // Client should backoff or cleanup the lock then retry.
     string retryable = 2; // Client may restart the txn. e.g write conflict.
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
     AlreadyExist already_exist = 5; // Key already exists
+    NotEqualTo not_equal_to = 6; // Value not equal to specified value
 }
 
 message WriteConflict {
