@@ -22,10 +22,8 @@ message AlreadyExist {
     bytes key = 1;
 }
 
-message NotEqualTo {
+message NotExist {
     bytes key = 1;
-    bytes value = 2;
-    bytes expected_value = 3;
 }
 
 message KeyError {
@@ -34,7 +32,7 @@ message KeyError {
     string abort = 3; // Client should abort the txn.
     WriteConflict conflict = 4; // Write conflict is moved from retryable to here.
     AlreadyExist already_exist = 5; // Key already exists
-    NotEqualTo not_equal_to = 6; // Value not equal to specified value
+    NotExist not_exist = 6; // Key not exists
 }
 
 message WriteConflict {
@@ -131,21 +129,16 @@ enum Op {
     Del = 1;
     Lock = 2;
     Rollback = 3;
-}
-
-message Precondition {
-    // Should not exist
-    bool should_not_exist = 1;
-    // Value must equal to
-    bytes equal_to = 2;
+    // insert operation has a constraint that key should not exist before.
+    Insert = 4;
+    // update operation has a constraint that key must exist.
+    Update = 5;
 }
 
 message Mutation {
     Op op = 1;
     bytes key = 2;
     bytes value = 3;
-    // Write only when the precondition satisfied
-    Precondition precondition = 4;
 }
 
 message PrewriteRequest {
