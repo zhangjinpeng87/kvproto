@@ -131,8 +131,6 @@ enum Op {
     Rollback = 3;
     // insert operation has a constraint that key should not exist before.
     Insert = 4;
-    // update operation has a constraint that key must exist.
-    Update = 5;
 }
 
 message Mutation {

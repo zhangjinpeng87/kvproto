@@ -17783,7 +17783,6 @@ pub enum Op {
     Lock = 2,
     Rollback = 3,
     Insert = 4,
-    Update = 5,
 }
 
 impl ::protobuf::ProtobufEnum for Op {
@@ -17798,7 +17797,6 @@ impl ::protobuf::ProtobufEnum for Op {
             2 => ::std::option::Option::Some(Op::Lock),
             3 => ::std::option::Option::Some(Op::Rollback),
             4 => ::std::option::Option::Some(Op::Insert),
-            5 => ::std::option::Option::Some(Op::Update),
             _ => ::std::option::Option::None
         }
     }
@@ -17810,7 +17808,6 @@ impl ::protobuf::ProtobufEnum for Op {
             Op::Lock,
             Op::Rollback,
             Op::Insert,
-            Op::Update,
         ];
         values
     }
@@ -18049,11 +18046,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     _error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\x14\n\
     \x05error\x18\x02\x20\x01(\tR\x05error*+\n\nCommandPri\x12\n\n\x06Normal\
     \x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsol\
-    ationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*F\n\x02Op\x12\
+    ationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*:\n\x02Op\x12\
     \x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\
-    \x12\x0c\n\x08Rollback\x10\x03\x12\n\n\x06Insert\x10\x04\x12\n\n\x06Upda\
-    te\x10\x05B\x1e\n\x10org.tikv.kvproto\xd0\xe2\x1e\x01\xc8\xe2\x1e\x01\
-    \xe0\xe2\x1e\x01b\x06proto3\
+    \x12\x0c\n\x08Rollback\x10\x03\x12\n\n\x06Insert\x10\x04B\x1e\n\x10org.t\
+    ikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
