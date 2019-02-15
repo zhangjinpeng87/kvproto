@@ -460,169 +460,6 @@ impl ::protobuf::reflect::ProtobufValue for AlreadyExist {
 }
 
 #[derive(PartialEq,Clone,Default)]
-pub struct NotExist {
-    // message fields
-    pub key: ::std::vec::Vec<u8>,
-    // special fields
-    unknown_fields: ::protobuf::UnknownFields,
-    cached_size: ::protobuf::CachedSize,
-}
-
-impl NotExist {
-    pub fn new() -> NotExist {
-        ::std::default::Default::default()
-    }
-
-    // bytes key = 1;
-
-    pub fn clear_key(&mut self) {
-        self.key.clear();
-    }
-
-    // Param is passed by value, moved
-    pub fn set_key(&mut self, v: ::std::vec::Vec<u8>) {
-        self.key = v;
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_key(&mut self) -> &mut ::std::vec::Vec<u8> {
-        &mut self.key
-    }
-
-    // Take field
-    pub fn take_key(&mut self) -> ::std::vec::Vec<u8> {
-        ::std::mem::replace(&mut self.key, ::std::vec::Vec::new())
-    }
-
-    pub fn get_key(&self) -> &[u8] {
-        &self.key
-    }
-}
-
-impl ::protobuf::Message for NotExist {
-    fn is_initialized(&self) -> bool {
-        true
-    }
-
-    fn merge_from(&mut self, is: &mut ::protobuf::CodedInputStream) -> ::protobuf::ProtobufResult<()> {
-        while !is.eof()? {
-            let (field_number, wire_type) = is.read_tag_unpack()?;
-            match field_number {
-                1 => {
-                    ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.key)?;
-                },
-                _ => {
-                    ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
-                },
-            };
-        }
-        ::std::result::Result::Ok(())
-    }
-
-    // Compute sizes of nested messages
-    #[allow(unused_variables)]
-    fn compute_size(&self) -> u32 {
-        let mut my_size = 0;
-        if !self.key.is_empty() {
-            my_size += ::protobuf::rt::bytes_size(1, &self.key);
-        }
-        my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
-        self.cached_size.set(my_size);
-        my_size
-    }
-
-    fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if !self.key.is_empty() {
-            os.write_bytes(1, &self.key)?;
-        }
-        os.write_unknown_fields(self.get_unknown_fields())?;
-        ::std::result::Result::Ok(())
-    }
-
-    fn get_cached_size(&self) -> u32 {
-        self.cached_size.get()
-    }
-
-    fn get_unknown_fields(&self) -> &::protobuf::UnknownFields {
-        &self.unknown_fields
-    }
-
-    fn mut_unknown_fields(&mut self) -> &mut ::protobuf::UnknownFields {
-        &mut self.unknown_fields
-    }
-
-    fn as_any(&self) -> &::std::any::Any {
-        self as &::std::any::Any
-    }
-    fn as_any_mut(&mut self) -> &mut ::std::any::Any {
-        self as &mut ::std::any::Any
-    }
-    fn into_any(self: Box<Self>) -> ::std::boxed::Box<::std::any::Any> {
-        self
-    }
-
-    fn descriptor(&self) -> &'static ::protobuf::reflect::MessageDescriptor {
-        Self::descriptor_static()
-    }
-
-    fn new() -> NotExist {
-        NotExist::new()
-    }
-
-    fn descriptor_static() -> &'static ::protobuf::reflect::MessageDescriptor {
-        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::MessageDescriptor> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const ::protobuf::reflect::MessageDescriptor,
-        };
-        unsafe {
-            descriptor.get(|| {
-                let mut fields = ::std::vec::Vec::new();
-                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeBytes>(
-                    "key",
-                    |m: &NotExist| { &m.key },
-                    |m: &mut NotExist| { &mut m.key },
-                ));
-                ::protobuf::reflect::MessageDescriptor::new::<NotExist>(
-                    "NotExist",
-                    fields,
-                    file_descriptor_proto()
-                )
-            })
-        }
-    }
-
-    fn default_instance() -> &'static NotExist {
-        static mut instance: ::protobuf::lazy::Lazy<NotExist> = ::protobuf::lazy::Lazy {
-            lock: ::protobuf::lazy::ONCE_INIT,
-            ptr: 0 as *const NotExist,
-        };
-        unsafe {
-            instance.get(NotExist::new)
-        }
-    }
-}
-
-impl ::protobuf::Clear for NotExist {
-    fn clear(&mut self) {
-        self.clear_key();
-        self.unknown_fields.clear();
-    }
-}
-
-impl ::std::fmt::Debug for NotExist {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-        ::protobuf::text_format::fmt(self, f)
-    }
-}
-
-impl ::protobuf::reflect::ProtobufValue for NotExist {
-    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
-        ::protobuf::reflect::ProtobufValueRef::Message(self)
-    }
-}
-
-#[derive(PartialEq,Clone,Default)]
 pub struct KeyError {
     // message fields
     pub locked: ::protobuf::SingularPtrField<LockInfo>,
@@ -630,7 +467,6 @@ pub struct KeyError {
     pub abort: ::std::string::String,
     pub conflict: ::protobuf::SingularPtrField<WriteConflict>,
     pub already_exist: ::protobuf::SingularPtrField<AlreadyExist>,
-    pub not_exist: ::protobuf::SingularPtrField<NotExist>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -791,39 +627,6 @@ impl KeyError {
     pub fn get_already_exist(&self) -> &AlreadyExist {
         self.already_exist.as_ref().unwrap_or_else(|| AlreadyExist::default_instance())
     }
-
-    // .kvrpcpb.NotExist not_exist = 6;
-
-    pub fn clear_not_exist(&mut self) {
-        self.not_exist.clear();
-    }
-
-    pub fn has_not_exist(&self) -> bool {
-        self.not_exist.is_some()
-    }
-
-    // Param is passed by value, moved
-    pub fn set_not_exist(&mut self, v: NotExist) {
-        self.not_exist = ::protobuf::SingularPtrField::some(v);
-    }
-
-    // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_not_exist(&mut self) -> &mut NotExist {
-        if self.not_exist.is_none() {
-            self.not_exist.set_default();
-        }
-        self.not_exist.as_mut().unwrap()
-    }
-
-    // Take field
-    pub fn take_not_exist(&mut self) -> NotExist {
-        self.not_exist.take().unwrap_or_else(|| NotExist::new())
-    }
-
-    pub fn get_not_exist(&self) -> &NotExist {
-        self.not_exist.as_ref().unwrap_or_else(|| NotExist::default_instance())
-    }
 }
 
 impl ::protobuf::Message for KeyError {
@@ -839,11 +642,6 @@ impl ::protobuf::Message for KeyError {
             }
         };
         for v in &self.already_exist {
-            if !v.is_initialized() {
-                return false;
-            }
-        };
-        for v in &self.not_exist {
             if !v.is_initialized() {
                 return false;
             }
@@ -869,9 +667,6 @@ impl ::protobuf::Message for KeyError {
                 },
                 5 => {
                     ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.already_exist)?;
-                },
-                6 => {
-                    ::protobuf::rt::read_singular_message_into(wire_type, is, &mut self.not_exist)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -903,10 +698,6 @@ impl ::protobuf::Message for KeyError {
             let len = v.compute_size();
             my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
         }
-        if let Some(ref v) = self.not_exist.as_ref() {
-            let len = v.compute_size();
-            my_size += 1 + ::protobuf::rt::compute_raw_varint32_size(len) + len;
-        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -931,11 +722,6 @@ impl ::protobuf::Message for KeyError {
         }
         if let Some(ref v) = self.already_exist.as_ref() {
             os.write_tag(5, ::protobuf::wire_format::WireTypeLengthDelimited)?;
-            os.write_raw_varint32(v.get_cached_size())?;
-            v.write_to_with_cached_sizes(os)?;
-        }
-        if let Some(ref v) = self.not_exist.as_ref() {
-            os.write_tag(6, ::protobuf::wire_format::WireTypeLengthDelimited)?;
             os.write_raw_varint32(v.get_cached_size())?;
             v.write_to_with_cached_sizes(os)?;
         }
@@ -1006,11 +792,6 @@ impl ::protobuf::Message for KeyError {
                     |m: &KeyError| { &m.already_exist },
                     |m: &mut KeyError| { &mut m.already_exist },
                 ));
-                fields.push(::protobuf::reflect::accessor::make_singular_ptr_field_accessor::<_, ::protobuf::types::ProtobufTypeMessage<NotExist>>(
-                    "not_exist",
-                    |m: &KeyError| { &m.not_exist },
-                    |m: &mut KeyError| { &mut m.not_exist },
-                ));
                 ::protobuf::reflect::MessageDescriptor::new::<KeyError>(
                     "KeyError",
                     fields,
@@ -1038,7 +819,6 @@ impl ::protobuf::Clear for KeyError {
         self.clear_abort();
         self.clear_conflict();
         self.clear_already_exist();
-        self.clear_not_exist();
         self.unknown_fields.clear();
     }
 }
@@ -4175,6 +3955,7 @@ pub struct Mutation {
     pub op: Op,
     pub key: ::std::vec::Vec<u8>,
     pub value: ::std::vec::Vec<u8>,
+    pub assertion: Assertion,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -4251,6 +4032,21 @@ impl Mutation {
     pub fn get_value(&self) -> &[u8] {
         &self.value
     }
+
+    // .kvrpcpb.Assertion assertion = 4;
+
+    pub fn clear_assertion(&mut self) {
+        self.assertion = Assertion::None;
+    }
+
+    // Param is passed by value, moved
+    pub fn set_assertion(&mut self, v: Assertion) {
+        self.assertion = v;
+    }
+
+    pub fn get_assertion(&self) -> Assertion {
+        self.assertion
+    }
 }
 
 impl ::protobuf::Message for Mutation {
@@ -4270,6 +4066,9 @@ impl ::protobuf::Message for Mutation {
                 },
                 3 => {
                     ::protobuf::rt::read_singular_proto3_bytes_into(wire_type, is, &mut self.value)?;
+                },
+                4 => {
+                    if wire_type == ::protobuf::wire_format::WireTypeVarint {self.assertion = is.read_enum()?;} else {return ::std::result::Result::Err(::protobuf::rt::unexpected_wire_type(wire_type));}
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -4292,6 +4091,9 @@ impl ::protobuf::Message for Mutation {
         if !self.value.is_empty() {
             my_size += ::protobuf::rt::bytes_size(3, &self.value);
         }
+        if self.assertion != Assertion::None {
+            my_size += ::protobuf::rt::enum_size(4, self.assertion);
+        }
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
@@ -4306,6 +4108,9 @@ impl ::protobuf::Message for Mutation {
         }
         if !self.value.is_empty() {
             os.write_bytes(3, &self.value)?;
+        }
+        if self.assertion != Assertion::None {
+            os.write_enum(4, self.assertion.value())?;
         }
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
@@ -4364,6 +4169,11 @@ impl ::protobuf::Message for Mutation {
                     |m: &Mutation| { &m.value },
                     |m: &mut Mutation| { &mut m.value },
                 ));
+                fields.push(::protobuf::reflect::accessor::make_simple_field_accessor::<_, ::protobuf::types::ProtobufTypeEnum<Assertion>>(
+                    "assertion",
+                    |m: &Mutation| { &m.assertion },
+                    |m: &mut Mutation| { &mut m.assertion },
+                ));
                 ::protobuf::reflect::MessageDescriptor::new::<Mutation>(
                     "Mutation",
                     fields,
@@ -4389,6 +4199,7 @@ impl ::protobuf::Clear for Mutation {
         self.clear_op();
         self.clear_key();
         self.clear_value();
+        self.clear_assertion();
         self.unknown_fields.clear();
     }
 }
@@ -17840,21 +17651,77 @@ impl ::protobuf::reflect::ProtobufValue for Op {
     }
 }
 
+#[derive(Clone,PartialEq,Eq,Debug,Hash)]
+pub enum Assertion {
+    None = 0,
+    Exist = 1,
+    NotExist = 2,
+}
+
+impl ::protobuf::ProtobufEnum for Assertion {
+    fn value(&self) -> i32 {
+        *self as i32
+    }
+
+    fn from_i32(value: i32) -> ::std::option::Option<Assertion> {
+        match value {
+            0 => ::std::option::Option::Some(Assertion::None),
+            1 => ::std::option::Option::Some(Assertion::Exist),
+            2 => ::std::option::Option::Some(Assertion::NotExist),
+            _ => ::std::option::Option::None
+        }
+    }
+
+    fn values() -> &'static [Self] {
+        static values: &'static [Assertion] = &[
+            Assertion::None,
+            Assertion::Exist,
+            Assertion::NotExist,
+        ];
+        values
+    }
+
+    fn enum_descriptor_static() -> &'static ::protobuf::reflect::EnumDescriptor {
+        static mut descriptor: ::protobuf::lazy::Lazy<::protobuf::reflect::EnumDescriptor> = ::protobuf::lazy::Lazy {
+            lock: ::protobuf::lazy::ONCE_INIT,
+            ptr: 0 as *const ::protobuf::reflect::EnumDescriptor,
+        };
+        unsafe {
+            descriptor.get(|| {
+                ::protobuf::reflect::EnumDescriptor::new("Assertion", file_descriptor_proto())
+            })
+        }
+    }
+}
+
+impl ::std::marker::Copy for Assertion {
+}
+
+impl ::std::default::Default for Assertion {
+    fn default() -> Self {
+        Assertion::None
+    }
+}
+
+impl ::protobuf::reflect::ProtobufValue for Assertion {
+    fn as_ref(&self) -> ::protobuf::reflect::ProtobufValueRef {
+        ::protobuf::reflect::ProtobufValueRef::Enum(self.descriptor())
+    }
+}
+
 static file_descriptor_proto_data: &'static [u8] = b"\
     \n\rkvrpcpb.proto\x12\x07kvrpcpb\x1a\x0cmetapb.proto\x1a\rerrorpb.proto\
     \x1a\x14gogoproto/gogo.proto\"}\n\x08LockInfo\x12!\n\x0cprimary_lock\x18\
     \x01\x20\x01(\x0cR\x0bprimaryLock\x12!\n\x0clock_version\x18\x02\x20\x01\
     (\x04R\x0blockVersion\x12\x10\n\x03key\x18\x03\x20\x01(\x0cR\x03key\x12\
     \x19\n\x08lock_ttl\x18\x04\x20\x01(\x04R\x07lockTtl\"\x20\n\x0cAlreadyEx\
-    ist\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"\x1c\n\x08NotExist\
-    \x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"\x89\x02\n\x08KeyError\
-    \x12)\n\x06locked\x18\x01\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06locked\
+    ist\x12\x10\n\x03key\x18\x01\x20\x01(\x0cR\x03key\"\xd9\x01\n\x08KeyErro\
+    r\x12)\n\x06locked\x18\x01\x20\x01(\x0b2\x11.kvrpcpb.LockInfoR\x06locked\
     \x12\x1c\n\tretryable\x18\x02\x20\x01(\tR\tretryable\x12\x14\n\x05abort\
     \x18\x03\x20\x01(\tR\x05abort\x122\n\x08conflict\x18\x04\x20\x01(\x0b2\
     \x16.kvrpcpb.WriteConflictR\x08conflict\x12:\n\ralready_exist\x18\x05\
-    \x20\x01(\x0b2\x15.kvrpcpb.AlreadyExistR\x0calreadyExist\x12.\n\tnot_exi\
-    st\x18\x06\x20\x01(\x0b2\x11.kvrpcpb.NotExistR\x08notExist\"w\n\rWriteCo\
-    nflict\x12\x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\x1f\n\
+    \x20\x01(\x0b2\x15.kvrpcpb.AlreadyExistR\x0calreadyExist\"w\n\rWriteConf\
+    lict\x12\x19\n\x08start_ts\x18\x01\x20\x01(\x04R\x07startTs\x12\x1f\n\
     \x0bconflict_ts\x18\x02\x20\x01(\x04R\nconflictTs\x12\x10\n\x03key\x18\
     \x03\x20\x01(\x0cR\x03key\x12\x18\n\x07primary\x18\x04\x20\x01(\x0cR\x07\
     primary\"\x9d\x03\n\x07Context\x12\x1b\n\tregion_id\x18\x01\x20\x01(\x04\
@@ -17892,25 +17759,26 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x05error\x12\x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05val\
     ue\x18\x03\x20\x01(\x0cR\x05value\"h\n\x0cScanResponse\x121\n\x0cregion_\
     error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12%\n\x05\
-    pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"O\n\x08Mutatio\
-    n\x12\x1b\n\x02op\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x02op\x12\x10\n\
-    \x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\x20\x01(\
-    \x0cR\x05value\"\x85\x02\n\x0fPrewriteRequest\x12*\n\x07context\x18\x01\
-    \x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12/\n\tmutations\x18\x02\
-    \x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12!\n\x0cprimary_lock\
-    \x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rstart_version\x18\x04\x20\
-    \x01(\x04R\x0cstartVersion\x12\x19\n\x08lock_ttl\x18\x05\x20\x01(\x04R\
-    \x07lockTtl\x122\n\x15skip_constraint_check\x18\x06\x20\x01(\x08R\x13ski\
-    pConstraintCheck\"p\n\x10PrewriteResponse\x121\n\x0cregion_error\x18\x01\
-    \x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12)\n\x06errors\x18\
-    \x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\"\xa9\x01\n\rCommitRe\
-    quest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07co\
-    ntext\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\x12\
-    \x12\n\x04keys\x18\x03\x20\x03(\x0cR\x04keys\x12%\n\x0ecommit_version\
-    \x18\x04\x20\x01(\x04R\rcommitVersionJ\x04\x08\x05\x10\x06R\x06binlog\"l\
-    \n\x0eCommitResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.er\
-    rorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.kv\
-    rpcpb.KeyErrorR\x05error\"g\n\rImportRequest\x12/\n\tmutations\x18\x01\
+    pairs\x18\x02\x20\x03(\x0b2\x0f.kvrpcpb.KvPairR\x05pairs\"\x81\x01\n\x08\
+    Mutation\x12\x1b\n\x02op\x18\x01\x20\x01(\x0e2\x0b.kvrpcpb.OpR\x02op\x12\
+    \x10\n\x03key\x18\x02\x20\x01(\x0cR\x03key\x12\x14\n\x05value\x18\x03\
+    \x20\x01(\x0cR\x05value\x120\n\tassertion\x18\x04\x20\x01(\x0e2\x12.kvrp\
+    cpb.AssertionR\tassertion\"\x85\x02\n\x0fPrewriteRequest\x12*\n\x07conte\
+    xt\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\x07context\x12/\n\tmutatio\
+    ns\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12!\n\x0cprim\
+    ary_lock\x18\x03\x20\x01(\x0cR\x0bprimaryLock\x12#\n\rstart_version\x18\
+    \x04\x20\x01(\x04R\x0cstartVersion\x12\x19\n\x08lock_ttl\x18\x05\x20\x01\
+    (\x04R\x07lockTtl\x122\n\x15skip_constraint_check\x18\x06\x20\x01(\x08R\
+    \x13skipConstraintCheck\"p\n\x10PrewriteResponse\x121\n\x0cregion_error\
+    \x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12)\n\x06error\
+    s\x18\x02\x20\x03(\x0b2\x11.kvrpcpb.KeyErrorR\x06errors\"\xa9\x01\n\rCom\
+    mitRequest\x12*\n\x07context\x18\x01\x20\x01(\x0b2\x10.kvrpcpb.ContextR\
+    \x07context\x12#\n\rstart_version\x18\x02\x20\x01(\x04R\x0cstartVersion\
+    \x12\x12\n\x04keys\x18\x03\x20\x03(\x0cR\x04keys\x12%\n\x0ecommit_versio\
+    n\x18\x04\x20\x01(\x04R\rcommitVersionJ\x04\x08\x05\x10\x06R\x06binlog\"\
+    l\n\x0eCommitResponse\x121\n\x0cregion_error\x18\x01\x20\x01(\x0b2\x0e.e\
+    rrorpb.ErrorR\x0bregionError\x12'\n\x05error\x18\x02\x20\x01(\x0b2\x11.k\
+    vrpcpb.KeyErrorR\x05error\"g\n\rImportRequest\x12/\n\tmutations\x18\x01\
     \x20\x03(\x0b2\x11.kvrpcpb.MutationR\tmutations\x12%\n\x0ecommit_version\
     \x18\x02\x20\x01(\x04R\rcommitVersion\"Y\n\x0eImportResponse\x121\n\x0cr\
     egion_error\x18\x01\x20\x01(\x0b2\x0e.errorpb.ErrorR\x0bregionError\x12\
@@ -18048,8 +17916,10 @@ static file_descriptor_proto_data: &'static [u8] = b"\
     \x10\0\x12\x07\n\x03Low\x10\x01\x12\x08\n\x04High\x10\x02*\x20\n\x0eIsol\
     ationLevel\x12\x06\n\x02SI\x10\0\x12\x06\n\x02RC\x10\x01*:\n\x02Op\x12\
     \x07\n\x03Put\x10\0\x12\x07\n\x03Del\x10\x01\x12\x08\n\x04Lock\x10\x02\
-    \x12\x0c\n\x08Rollback\x10\x03\x12\n\n\x06Insert\x10\x04B\x1e\n\x10org.t\
-    ikv.kvproto\xe0\xe2\x1e\x01\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01b\x06proto3\
+    \x12\x0c\n\x08Rollback\x10\x03\x12\n\n\x06Insert\x10\x04*.\n\tAssertion\
+    \x12\x08\n\x04None\x10\0\x12\t\n\x05Exist\x10\x01\x12\x0c\n\x08NotExist\
+    \x10\x02B\x1e\n\x10org.tikv.kvproto\xc8\xe2\x1e\x01\xd0\xe2\x1e\x01\xe0\
+    \xe2\x1e\x01b\x06proto3\
 ";
 
 static mut file_descriptor_proto_lazy: ::protobuf::lazy::Lazy<::protobuf::descriptor::FileDescriptorProto> = ::protobuf::lazy::Lazy {
