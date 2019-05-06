@@ -18,7 +18,8 @@ message LockInfo {
     uint64 lock_version = 2;
     bytes key = 3;
     uint64 lock_ttl = 4;
-    uint64 txn_size = 5; // How many keys this transaction involved.
+    // How many keys this transaction involved.
+    uint64 txn_size = 5;
 }
 
 message AlreadyExist {
@@ -155,7 +156,8 @@ message PrewriteRequest {
     bool skip_constraint_check = 6;
     // For pessimistic transaction, some mutations don't need to be locked, for example, non-unique index key.
     repeated bool is_pessimistic_lock = 7;
-    uint64 txn_size = 8; // How many keys this transaction involved.
+    // How many keys this transaction involved.
+    uint64 txn_size = 8;
 }
 
 message PrewriteResponse {
