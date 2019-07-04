@@ -256,6 +256,13 @@ const METHOD_TIKV_BATCH_COMMANDS: ::grpcio::Method<super::tikvpb::BatchCommandsR
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_TIKV_DUMP_MEMORY_INFO: ::grpcio::Method<super::kvrpcpb::DumpMemoryInfoRequest, super::kvrpcpb::DumpMemoryInfoResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/tikvpb.Tikv/DumpMemoryInfo",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct TikvClient {
     client: ::grpcio::Client,
@@ -771,6 +778,22 @@ impl TikvClient {
     pub fn batch_commands(&self) -> ::grpcio::Result<(::grpcio::ClientDuplexSender<super::tikvpb::BatchCommandsRequest>, ::grpcio::ClientDuplexReceiver<super::tikvpb::BatchCommandsResponse>)> {
         self.batch_commands_opt(::grpcio::CallOption::default())
     }
+
+    pub fn dump_memory_info_opt(&self, req: &super::kvrpcpb::DumpMemoryInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::kvrpcpb::DumpMemoryInfoResponse> {
+        self.client.unary_call(&METHOD_TIKV_DUMP_MEMORY_INFO, req, opt)
+    }
+
+    pub fn dump_memory_info(&self, req: &super::kvrpcpb::DumpMemoryInfoRequest) -> ::grpcio::Result<super::kvrpcpb::DumpMemoryInfoResponse> {
+        self.dump_memory_info_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn dump_memory_info_async_opt(&self, req: &super::kvrpcpb::DumpMemoryInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::DumpMemoryInfoResponse>> {
+        self.client.unary_call_async(&METHOD_TIKV_DUMP_MEMORY_INFO, req, opt)
+    }
+
+    pub fn dump_memory_info_async(&self, req: &super::kvrpcpb::DumpMemoryInfoRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::kvrpcpb::DumpMemoryInfoResponse>> {
+        self.dump_memory_info_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -811,6 +834,7 @@ pub trait Tikv {
     fn mvcc_get_by_key(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByKeyRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByKeyResponse>);
     fn mvcc_get_by_start_ts(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::MvccGetByStartTsRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::MvccGetByStartTsResponse>);
     fn batch_commands(&mut self, ctx: ::grpcio::RpcContext, stream: ::grpcio::RequestStream<super::tikvpb::BatchCommandsRequest>, sink: ::grpcio::DuplexSink<super::tikvpb::BatchCommandsResponse>);
+    fn dump_memory_info(&mut self, ctx: ::grpcio::RpcContext, req: super::kvrpcpb::DumpMemoryInfoRequest, sink: ::grpcio::UnarySink<super::kvrpcpb::DumpMemoryInfoResponse>);
 }
 
 pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -950,6 +974,10 @@ pub fn create_tikv<S: Tikv + Send + Clone + 'static>(s: S) -> ::grpcio::Service 
     let mut instance = s.clone();
     builder = builder.add_duplex_streaming_handler(&METHOD_TIKV_BATCH_COMMANDS, move |ctx, req, resp| {
         instance.batch_commands(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_TIKV_DUMP_MEMORY_INFO, move |ctx, req, resp| {
+        instance.dump_memory_info(ctx, req, resp)
     });
     builder.build()
 }

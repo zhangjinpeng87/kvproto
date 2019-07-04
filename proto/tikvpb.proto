@@ -65,6 +65,9 @@ service Tikv {
     rpc MvccGetByStartTs(kvrpcpb.MvccGetByStartTsRequest) returns (kvrpcpb.MvccGetByStartTsResponse) {}
 
     rpc BatchCommands(stream BatchCommandsRequest) returns (stream BatchCommandsResponse) {}
+
+    // Dump internal memory information of TiKV.
+    rpc DumpMemoryInfo(kvrpcpb.DumpMemoryInfoRequest) returns (kvrpcpb.DumpMemoryInfoResponse) {}
 }
 
 message BatchCommandsRequest {
