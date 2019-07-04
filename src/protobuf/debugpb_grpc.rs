@@ -109,6 +109,13 @@ const METHOD_DEBUG_GET_REGION_PROPERTIES: ::grpcio::Method<super::debugpb::GetRe
     resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
 };
 
+const METHOD_DEBUG_DUMP_MEMORY_INFO: ::grpcio::Method<super::debugpb::DumpMemoryInfoRequest, super::debugpb::DumpMemoryInfoResponse> = ::grpcio::Method {
+    ty: ::grpcio::MethodType::Unary,
+    name: "/debugpb.Debug/DumpMemoryInfo",
+    req_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+    resp_mar: ::grpcio::Marshaller { ser: ::grpcio::pb_ser, de: ::grpcio::pb_de },
+};
+
 #[derive(Clone)]
 pub struct DebugClient {
     client: ::grpcio::Client,
@@ -320,6 +327,22 @@ impl DebugClient {
     pub fn get_region_properties_async(&self, req: &super::debugpb::GetRegionPropertiesRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::GetRegionPropertiesResponse>> {
         self.get_region_properties_async_opt(req, ::grpcio::CallOption::default())
     }
+
+    pub fn dump_memory_info_opt(&self, req: &super::debugpb::DumpMemoryInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<super::debugpb::DumpMemoryInfoResponse> {
+        self.client.unary_call(&METHOD_DEBUG_DUMP_MEMORY_INFO, req, opt)
+    }
+
+    pub fn dump_memory_info(&self, req: &super::debugpb::DumpMemoryInfoRequest) -> ::grpcio::Result<super::debugpb::DumpMemoryInfoResponse> {
+        self.dump_memory_info_opt(req, ::grpcio::CallOption::default())
+    }
+
+    pub fn dump_memory_info_async_opt(&self, req: &super::debugpb::DumpMemoryInfoRequest, opt: ::grpcio::CallOption) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::DumpMemoryInfoResponse>> {
+        self.client.unary_call_async(&METHOD_DEBUG_DUMP_MEMORY_INFO, req, opt)
+    }
+
+    pub fn dump_memory_info_async(&self, req: &super::debugpb::DumpMemoryInfoRequest) -> ::grpcio::Result<::grpcio::ClientUnaryReceiver<super::debugpb::DumpMemoryInfoResponse>> {
+        self.dump_memory_info_async_opt(req, ::grpcio::CallOption::default())
+    }
     pub fn spawn<F>(&self, f: F) where F: ::futures::Future<Item = (), Error = ()> + Send + 'static {
         self.client.spawn(f)
     }
@@ -339,6 +362,7 @@ pub trait Debug {
     fn check_region_consistency(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::RegionConsistencyCheckRequest, sink: ::grpcio::UnarySink<super::debugpb::RegionConsistencyCheckResponse>);
     fn modify_tikv_config(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::ModifyTikvConfigRequest, sink: ::grpcio::UnarySink<super::debugpb::ModifyTikvConfigResponse>);
     fn get_region_properties(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::GetRegionPropertiesRequest, sink: ::grpcio::UnarySink<super::debugpb::GetRegionPropertiesResponse>);
+    fn dump_memory_info(&mut self, ctx: ::grpcio::RpcContext, req: super::debugpb::DumpMemoryInfoRequest, sink: ::grpcio::UnarySink<super::debugpb::DumpMemoryInfoResponse>);
 }
 
 pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Service {
@@ -394,6 +418,10 @@ pub fn create_debug<S: Debug + Send + Clone + 'static>(s: S) -> ::grpcio::Servic
     let mut instance = s.clone();
     builder = builder.add_unary_handler(&METHOD_DEBUG_GET_REGION_PROPERTIES, move |ctx, req, resp| {
         instance.get_region_properties(ctx, req, resp)
+    });
+    let mut instance = s.clone();
+    builder = builder.add_unary_handler(&METHOD_DEBUG_DUMP_MEMORY_INFO, move |ctx, req, resp| {
+        instance.dump_memory_info(ctx, req, resp)
     });
     builder.build()
 }
