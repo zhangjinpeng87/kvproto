@@ -64,6 +64,9 @@ service Debug {
 
     // Get region properties
     rpc GetRegionProperties(GetRegionPropertiesRequest) returns (GetRegionPropertiesResponse) {}
+
+    // Dump memory info
+    rpc DumpMemoryInfo(DumpMemoryInfoReqeust) returns (DumpMemoryInfoResponse) {}
 }
 
 enum DB {
@@ -227,4 +230,11 @@ message GetRegionPropertiesRequest {
 
 message GetRegionPropertiesResponse {
     repeated Property props = 1;
+}
+
+message DumpMemoryInfoRequest {
+}
+
+message DumpMemoryInfoResponse {
+    string infos = 1;
 }
