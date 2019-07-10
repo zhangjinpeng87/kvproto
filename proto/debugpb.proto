@@ -236,5 +236,5 @@ message DumpMemoryInfoRequest {
 }
 
 message DumpMemoryInfoResponse {
-    string infos = 1;
+    repeated string infos = 1;
 }

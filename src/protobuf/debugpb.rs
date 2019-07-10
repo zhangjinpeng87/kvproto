@@ -5285,7 +5285,7 @@ impl ::protobuf::reflect::ProtobufValue for DumpMemoryInfoRequest {
 #[derive(PartialEq,Clone,Default)]
 pub struct DumpMemoryInfoResponse {
     // message fields
-    pub infos: ::std::string::String,
+    pub infos: ::protobuf::RepeatedField<::std::string::String>,
     // special fields
     unknown_fields: ::protobuf::UnknownFields,
     cached_size: ::protobuf::CachedSize,
@@ -5296,29 +5296,28 @@ impl DumpMemoryInfoResponse {
         ::std::default::Default::default()
     }
 
-    // string infos = 1;
+    // repeated string infos = 1;
 
     pub fn clear_infos(&mut self) {
         self.infos.clear();
     }
 
     // Param is passed by value, moved
-    pub fn set_infos(&mut self, v: ::std::string::String) {
+    pub fn set_infos(&mut self, v: ::protobuf::RepeatedField<::std::string::String>) {
         self.infos = v;
     }
 
     // Mutable pointer to the field.
-    // If field is not initialized, it is initialized with default value first.
-    pub fn mut_infos(&mut self) -> &mut ::std::string::String {
+    pub fn mut_infos(&mut self) -> &mut ::protobuf::RepeatedField<::std::string::String> {
         &mut self.infos
     }
 
     // Take field
-    pub fn take_infos(&mut self) -> ::std::string::String {
-        ::std::mem::replace(&mut self.infos, ::std::string::String::new())
+    pub fn take_infos(&mut self) -> ::protobuf::RepeatedField<::std::string::String> {
+        ::std::mem::replace(&mut self.infos, ::protobuf::RepeatedField::new())
     }
 
-    pub fn get_infos(&self) -> &str {
+    pub fn get_infos(&self) -> &[::std::string::String] {
         &self.infos
     }
 }
@@ -5333,7 +5332,7 @@ impl ::protobuf::Message for DumpMemoryInfoResponse {
             let (field_number, wire_type) = is.read_tag_unpack()?;
             match field_number {
                 1 => {
-                    ::protobuf::rt::read_singular_proto3_string_into(wire_type, is, &mut self.infos)?;
+                    ::protobuf::rt::read_repeated_string_into(wire_type, is, &mut self.infos)?;
                 },
                 _ => {
                     ::protobuf::rt::read_unknown_or_skip_group(field_number, wire_type, is, self.mut_unknown_fields())?;
@@ -5347,18 +5346,18 @@ impl ::protobuf::Message for DumpMemoryInfoResponse {
     #[allow(unused_variables)]
     fn compute_size(&self) -> u32 {
         let mut my_size = 0;
-        if !self.infos.is_empty() {
-            my_size += ::protobuf::rt::string_size(1, &self.infos);
-        }
+        for value in &self.infos {
+            my_size += ::protobuf::rt::string_size(1, &value);
+        };
         my_size += ::protobuf::rt::unknown_fields_size(self.get_unknown_fields());
         self.cached_size.set(my_size);
         my_size
     }
 
     fn write_to_with_cached_sizes(&self, os: &mut ::protobuf::CodedOutputStream) -> ::protobuf::ProtobufResult<()> {
-        if !self.infos.is_empty() {
-            os.write_string(1, &self.infos)?;
-        }
+        for v in &self.infos {
+            os.write_string(1, &v)?;
+        };
         os.write_unknown_fields(self.get_unknown_fields())?;
         ::std::result::Result::Ok(())
     }
