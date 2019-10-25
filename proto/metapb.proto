@@ -31,6 +31,11 @@ message StoreLabel {
     string value = 2;
 }
 
+enum StoreType {
+    Performance = 0;
+    Storage = 1;
+}
+
 message Store {
     uint64 id = 1;
     // Address to handle client requests (kv, cop, etc.)
@@ -41,6 +46,9 @@ message Store {
     // Address to handle peer requests (raft messages from other store).
     // Empty means same as address.
     string peer_address = 6;
+    // Type of store, storage type store cold data with high ratio compression to
+    // reduce storage space and performance type provide high performance for hot data.
+    StoreType store_type = 7;
 }
 
 message RegionEpoch {
@@ -57,9 +65,11 @@ message Region {
     bytes end_key = 3;
     RegionEpoch region_epoch = 4;
     repeated Peer peers = 5;
+    int32 temperature = 6; // temperature of this region
+    uint64 last_access_time = 7;
 }
 
-message Peer {      
+message Peer {
     uint64 id = 1;
     uint64 store_id = 2;
     bool is_learner = 3;
