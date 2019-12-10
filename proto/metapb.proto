@@ -60,10 +60,57 @@ message Region {
     bytes end_key = 3;
     RegionEpoch region_epoch = 4;
     repeated Peer peers = 5;
+    // If this region contains table index, there will be related
+    // index columns statistics.
+    RegionStats stats = 6;
 }
 
-message Peer {      
+message Peer {
     uint64 id = 1;
     uint64 store_id = 2;
     bool is_learner = 3;
+}
+
+message RegionStats {
+    // When this statistics was collected, new statistics can overwrite
+    // old statistics.
+    uint64 applied_index = 1;
+    // If a region contains too many rows like 2 millions rows, we will
+    // cut it into several sub-ranges, and statistics for each sub-range.
+    // Also if a region contains several indices, we will statistics for
+    // each index individually.
+    repeated Stats stats = 2;
+}
+
+message Stats {
+    bytes start_key = 1;
+    bytes end_key = 2;
+    // There will be multiple histograms and cmsketches when this range
+    // relate to a multiple column combine index. The first hitogram and
+    // cmsketch relate to column1, the second histogram and cmsketch relate
+    // to column1+column2, and the third histogram and cmsketch relate to
+    // column1+column3+column3 etc.
+    repeated Histogram hists = 3;
+    repeated CMSketch cmsketches = 5;
+}
+
+message Histogram {
+    uint32 ndv = 1;
+    uint32 null_count = 2;
+    uint64 total_col_size = 3;
+    uint32 row_count = 4;
+    uint32 repeat = 5;
+}
+
+message CMSketch {
+    // Depth 0 means table is empty, but the topn still not empty.
+    uint32 depth = 1;
+    uint32 width = 2;
+    repeated bytes table = 3;
+    TopN topn = 4;
+}
+
+message TopN {
+    // Keys' hash to count
+    map<uint64, uint32> keys_count = 1;
 }
