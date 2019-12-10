@@ -111,6 +111,6 @@ message CMSketch {
 }
 
 message TopN {
-    // Keys' hash to count
-    map<uint64, uint32> keys_count = 1;
+    repeated uint64 keys_hash = 1;
+    repeated uint32 count = 2;
 }
