@@ -703,6 +703,17 @@ message Context {
     // Read request should read through locks belonging to these transactions because these
     // transactions are committed and theirs commit_ts <= read request's start_ts.
     repeated uint64 committed_locks = 22;
+
+    // The latency sensitivity of the requests, for these requests that expected low latency the 
+    // value would by 'Sensitive', for those reqeusts that don't care the latency the value would
+    // be 'Insensitive'.
+    LatencySensitivity latency_sensitivity = 23;
+}
+
+enum LatencySensitivity {
+    Mid = 0;
+    Sensitive = 1;
+    Insensitive = 2;
 }
 
 // The API version the server and the client is using.
