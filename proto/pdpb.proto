@@ -598,12 +598,20 @@ message RecoveryPlan {
     repeated uint64 deletes = 3;
 }
 
+message TenantQuota {
+    uint32 tenant_id = 1;
+    uint64 write_bytes_per_sec = 2;
+    // Like k8s, 1000 means 1vCPU
+    uint32 read_milli_cpu = 3;
+}
+
 message StoreHeartbeatResponse {
     ResponseHeader header = 1;
     replication_modepb.ReplicationStatus replication_status = 2;
     string cluster_version = 3;
     bool require_detailed_report = 4;
     RecoveryPlan plan = 5;
+    repeated TenantQuota tenant_quota = 6;
 }
 
 message ScatterRegionRequest {
