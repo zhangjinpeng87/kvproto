@@ -600,15 +600,12 @@ message RecoveryPlan {
 
 message TenantQuota {
     uint32 tenant_id = 1;
-    uint64 write_bytes_per_sec = 2;
-    // Like k8s, 1000 means 1vCPU
-    uint32 read_milli_cpu = 3;
-
-    // like k8s, 1000 means 1vCPU
-    uint32 cpu_quota = 4;
-    // memory quota, 512M, 2G
-    string mem_quota = 5;
-    string storage_size = 6;
+    // 1000 means 1vCPU, 0 means unlimited
+    uint32 cpu_quota = 2;
+    // memory quota, 512M, 2G, 0 means unlimited
+    string mem_quota = 3;
+    // storage size, 0 means unlimited
+    string storage_quota = 4;
 }
 
 message StoreHeartbeatResponse {
