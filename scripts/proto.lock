@@ -15577,6 +15577,36 @@
             ]
           },
           {
+            "name": "ReportMinResolvedTsRequest",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "RequestHeader"
+              },
+              {
+                "id": 2,
+                "name": "store_id",
+                "type": "uint64"
+              },
+              {
+                "id": 3,
+                "name": "min_watermark",
+                "type": "uint64"
+              }
+            ]
+          },
+          {
+            "name": "ReportMinResolvedTsResponse",
+            "fields": [
+              {
+                "id": 1,
+                "name": "header",
+                "type": "ResponseHeader"
+              }
+            ]
+          },
+          {
             "name": "ReportMinWatermarkRequest",
             "fields": [
               {
@@ -15911,6 +15941,11 @@
                 "in_type": "ReportBucketsRequest",
                 "out_type": "ReportBucketsResponse",
                 "in_streamed": true
+              },
+              {
+                "name": "ReportMinResolvedTS",
+                "in_type": "ReportMinResolvedTsRequest",
+                "out_type": "ReportMinResolvedTsResponse"
               },
               {
                 "name": "ReportMinWatermark",
