@@ -16165,6 +16165,11 @@
                 "id": 3,
                 "name": "value",
                 "type": "bytes"
+              },
+              {
+                "id": 4,
+                "name": "old_value",
+                "type": "bytes"
               }
             ]
           },
